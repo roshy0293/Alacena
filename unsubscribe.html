@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Cancelar suscripción · Alacena Mágica</title>
+  <meta name="description" content="Cómo cancelar tu suscripción de Alacena Mágica y solicitar la baja de tu cuenta y la eliminación de tus datos." />
+  <meta name="theme-color" content="#0c1c0d" />
+  <link rel="icon" type="image/svg+xml" href="assets/logos/Isotipo.svg" />
+  <link rel="apple-touch-icon" href="assets/logos/Isotipo.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Outfit:wght@300..700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/legal.css" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <header class="navbar navbar--solid" id="navbar">
+    <div class="container navbar__inner">
+      <a class="navbar__brand" href="index.html" aria-label="Alacena Mágica, ir al inicio">
+        <img
+          src="assets/logos/Alacena_Magica_Alacena_Magica_Logo_Color.png"
+          alt="Alacena Mágica"
+          class="navbar__logo"
+          width="180" height="56"
+        />
+      </a>
+      <a class="navbar__back" href="index.html">← <span>Volver al inicio</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ══════════ CABECERA ══════════ -->
+    <section class="legal-hero grain">
+      <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="container legal-hero__inner">
+        <span class="pill pill--dark">⚙️ Gestión de suscripción</span>
+        <h1 class="legal-hero__title">Cancelar suscripción</h1>
+        <p class="legal-hero__sub">
+          Aquí puedes ver cómo cancelar tu suscripción de Alacena Mágica y,
+          si lo deseas, solicitar también la baja de tu cuenta.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════ CONTENIDO ══════════ -->
+    <section class="legal">
+      <div class="container" style="max-width: 56rem">
+
+        <!-- ── 1. Cómo cancelar ── -->
+        <article class="panel">
+          <h2 class="panel__title">1. Cómo cancelar la suscripción</h2>
+          <p class="panel__intro">
+            Las suscripciones compradas desde la app se gestionan desde la tienda donde se
+            activaron. Debes cancelarla desde <strong>Google Play</strong> o desde la
+            <strong>App Store</strong>.
+          </p>
+
+          <div class="steps-list">
+            <div class="step-card">
+              <span class="step-card__num" aria-hidden="true">1</span>
+              <div>
+                <p class="step-card__title">En Android (Google Play)</p>
+                <p class="step-card__text">
+                  Abre Google Play → toca tu perfil → <strong>Pagos y suscripciones</strong>
+                  → <strong>Suscripciones</strong> → selecciona <strong>Alacena Mágica</strong>
+                  → pulsa <strong>Cancelar suscripción</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div class="step-card">
+              <span class="step-card__num" aria-hidden="true">2</span>
+              <div>
+                <p class="step-card__title">En iPhone/iPad (App Store)</p>
+                <p class="step-card__text">
+                  Abre Ajustes o App Store → toca tu nombre/perfil →
+                  <strong>Suscripciones</strong> → selecciona <strong>Alacena Mágica</strong>
+                  → pulsa <strong>Cancelar suscripción</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert--warn" style="margin-top: 1.5rem">
+            <span class="alert__icon" aria-hidden="true">⚠️</span>
+            <p>
+              <strong>Importante:</strong> desinstalar la app no cancela la suscripción.
+              Debes cancelarla desde la tienda correspondiente.
+            </p>
+          </div>
+        </article>
+
+        <!-- ── 2. Baja de cuenta ── -->
+        <article class="panel">
+          <h2 class="panel__title">2. Baja de cuenta y eliminación de datos</h2>
+          <p class="panel__intro">
+            Si además de cancelar la suscripción deseas eliminar tu cuenta y tus datos
+            asociados, puedes solicitárnoslo a través del siguiente formulario.
+          </p>
+
+          <div class="alert alert--ok">
+            <span class="alert__icon" aria-hidden="true">✅</span>
+            <p>Procesaremos tu solicitud de baja de cuenta en el menor tiempo posible.</p>
+          </div>
+
+          <!--
+            ═══════════════════════════════════════════════════════════
+            ⚠️ CONFIGURACIÓN PENDIENTE DEL FORMULARIO
+
+            Este sitio es estático: no hay servidor que reciba el envío.
+
+            · data-endpoint VACÍO (estado actual): al enviar, el navegador
+              abre el correo del usuario con todos los datos ya rellenados
+              dirigido a data-fallback-email. Así la solicitud llega igual.
+
+            · data-endpoint CON URL: se envía por POST (fetch) a esa URL
+              y luego se redirige a gracias.html. Rellénalo cuando tengas
+              un servicio de formularios o un endpoint propio.
+
+            No dejes esto sin resolver: son solicitudes de borrado de datos
+            y deben llegar a una persona.
+            ═══════════════════════════════════════════════════════════
+          -->
+          <form
+            id="unsubscribeForm"
+            class="unsubscribe-form"
+            novalidate
+            data-endpoint=""
+            data-fallback-email="franciscorueda2602@gmail.com"
+            data-success="gracias.html"
+          >
+            <div class="form-grid">
+              <div class="field">
+                <label class="field__label" for="nombre">
+                  Nombre <span class="field__req" aria-hidden="true">*</span>
+                </label>
+                <input class="field__control" type="text" id="nombre" name="nombre"
+                       placeholder="Tu nombre" required autocomplete="name" />
+                <p class="field__error">Necesitamos tu nombre para localizar la cuenta.</p>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="email">
+                  Correo electrónico <span class="field__req" aria-hidden="true">*</span>
+                </label>
+                <input class="field__control" type="email" id="email" name="email"
+                       placeholder="tu@email.com" required autocomplete="email" />
+                <p class="field__error">Revisa el correo: es donde te responderemos.</p>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="plataforma">
+                  Plataforma <span class="field__req" aria-hidden="true">*</span>
+                </label>
+                <select class="field__control" id="plataforma" name="plataforma" required>
+                  <option value="">Selecciona una opción</option>
+                  <option>Android (Google Play)</option>
+                  <option>iPhone/iPad (App Store)</option>
+                  <option>Otra / no lo sé</option>
+                </select>
+                <p class="field__error">Elige la plataforma desde la que usas la app.</p>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="tipo">
+                  Tipo de solicitud <span class="field__req" aria-hidden="true">*</span>
+                </label>
+                <select class="field__control" id="tipo" name="tipo" required>
+                  <option value="">Selecciona una opción</option>
+                  <option>Baja de cuenta</option>
+                  <option>Eliminación de mis datos</option>
+                  <option>Baja de cuenta y eliminación de datos</option>
+                  <option>Solo una consulta</option>
+                </select>
+                <p class="field__error">Dinos qué necesitas que hagamos.</p>
+              </div>
+
+              <div class="field field--full">
+                <label class="field__label" for="comentario">Comentario adicional</label>
+                <textarea class="field__control" id="comentario" name="comentario"
+                          placeholder="Indica cualquier dato adicional que nos ayude a localizar tu cuenta."></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn--primary">Enviar solicitud</button>
+              <p class="form-status" id="formStatus" role="status"></p>
+            </div>
+          </form>
+        </article>
+
+        <!-- ── 3. Contacto ── -->
+        <article class="panel">
+          <h2 class="panel__title">3. Contacto</h2>
+          <div class="contact-box">
+            <p>
+              <strong>Email de soporte:</strong>
+              <a href="mailto:franciscorueda2602@gmail.com">franciscorueda2602@gmail.com</a>
+            </p>
+            <p>
+              <strong>Política de privacidad:</strong>
+              <a href="privacy.html">www.alacenamagica.com/privacy.html</a>
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="footer">
+    <!-- Logo de marca, versión a color sobre fondo blanco -->
+    <div class="footer__brand">
+      <a href="index.html" aria-label="Alacena Mágica, ir al inicio">
+        <img
+          src="assets/logos/Alacena_Magica_Alacena_Magica_Logo_Color.png"
+          alt="Alacena Mágica"
+          width="500" height="321"
+          loading="lazy"
+        />
+      </a>
+    </div>
+
+    <div class="footer__legal">
+      <div class="container">
+        <nav class="footer__legal-links" aria-label="Enlaces legales">
+          <a href="privacy.html">Política de Privacidad</a>
+          <a href="terms.html">Términos y Condiciones</a>
+          <a href="unsubscribe.html" aria-current="page">Cancelar suscripción</a>
+          <a href="support.html">Soporte</a>
+        </nav>
+
+        <div class="footer__stores">
+          <a href="#" aria-label="Descargar en App Store (disponible próximamente)">
+            <img src="assets/images/app-store.png" alt="Descargar en App Store" width="140" height="44" loading="lazy" />
+          </a>
+          <a href="#" aria-label="Descargar en Google Play (disponible próximamente)">
+            <img src="assets/images/google-play.png" alt="Disponible en Google Play" width="140" height="44" loading="lazy" />
+          </a>
+        </div>
+
+        <p class="footer__copy">Copyright &copy; <span data-year>2026</span> Alacena M&aacute;gica. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/legal.js" defer></script>
+  <script src="js/unsubscribe.js" defer></script>
+</body>
+</html>
