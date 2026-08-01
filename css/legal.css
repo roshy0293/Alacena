@@ -14,8 +14,8 @@
   backdrop-filter: blur(16px) saturate(1.4);
   border-bottom: 1px solid var(--gris-claro);
 }
-.navbar--solid .navbar__inner { height: 108px; }
-.navbar--solid .navbar__logo { height: 76px; }
+.navbar--solid .navbar__inner { height: var(--nav-h-scrolled); }
+.navbar--solid .navbar__logo { height: calc(var(--nav-h-scrolled) - 32px); }
 .navbar__back {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-weight: 600; font-size: 0.95rem; color: var(--verde-oscuro);
@@ -63,9 +63,13 @@
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: start;
 }
+/* Sin esto, el min-content de las direcciones de correo ensancha la
+   columna y la página se desplaza en horizontal en móvil. */
+.legal__layout > * { min-width: 0; }
+.legal__body a, .support-card__link { overflow-wrap: anywhere; }
 
 /* Índice lateral, generado desde los <h2> por js/legal.js */
-.legal__toc { position: sticky; top: 136px; }
+.legal__toc { position: sticky; top: calc(var(--nav-h-scrolled) + 36px); }
 .legal__toc-title {
   font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.09em; color: var(--texto-suave); margin-bottom: 1rem;
