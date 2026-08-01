@@ -68,6 +68,11 @@
   --container-max: 1240px;
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
 
+  /* Alto de la barra: lo usan el menú desplegable y el scroll-padding,
+     así que vive aquí para que los tres no se desincronicen. */
+  --nav-h: 118px;
+  --nav-h-scrolled: 100px;
+
   /* Radios (formas orgánicas) */
   --r-sm: 12px;
   --r-md: 20px;
@@ -105,7 +110,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 124px;
+  scroll-padding-top: calc(var(--nav-h-scrolled) + 24px);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -201,13 +206,16 @@ ul, ol { list-style: none; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
+/* Se esconde con translate(-100%), no con un desplazamiento en píxeles:
+   en móvil el texto se parte en dos líneas y con un valor fijo asomaba
+   una franja verde por encima de toda la página. */
 .skip-link {
-  position: fixed; left: 50%; top: -100px; transform: translateX(-50%);
+  position: fixed; left: 50%; top: 0; transform: translate(-50%, -100%);
   background: var(--verde-oscuro); color: #fff; padding: 0.8rem 1.6rem;
   border-radius: 0 0 var(--r-md) var(--r-md); z-index: 3000;
-  font-weight: 600; transition: top var(--t-fast);
+  font-weight: 600; transition: transform var(--t-fast);
 }
-.skip-link:focus { top: 0; color: #fff; }
+.skip-link:focus { transform: translate(-50%, 0); color: #fff; }
 
 /* ── Etiqueta / eyebrow ──────────── */
 .pill {
@@ -367,7 +375,7 @@ ul, ol { list-style: none; }
               backdrop-filter var(--t-med), border-color var(--t-med);
   border-bottom: 1px solid transparent;
 }
-.navbar__inner { display: flex; align-items: center; justify-content: space-between; height: 118px; }
+.navbar__inner { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); }
 .navbar__brand { display: block; }
 .navbar__logo { height: 82px; width: auto; transition: height var(--t-med), opacity var(--t-med); }
 .navbar__logo--color { display: none; }
@@ -379,7 +387,7 @@ ul, ol { list-style: none; }
   border-color: var(--gris-claro);
   box-shadow: 0 6px 30px rgba(29, 56, 28, 0.07);
 }
-.navbar.is-scrolled .navbar__inner { height: 100px; }
+.navbar.is-scrolled .navbar__inner { height: var(--nav-h-scrolled); }
 .navbar.is-scrolled .navbar__logo { height: 70px; }
 .navbar.is-scrolled .navbar__logo--white { display: none; }
 .navbar.is-scrolled .navbar__logo--color { display: block; }
@@ -405,7 +413,10 @@ ul, ol { list-style: none; }
 }
 .navbar__links a:hover::after, .navbar__links a.is-active::after { width: 100%; }
 
-.navbar__toggle { display: none; flex-direction: column; gap: 5px; padding: 10px; }
+.navbar__toggle {
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; padding: 10px; min-width: 44px; min-height: 44px;
+}
 .navbar__toggle span {
   display: block; width: 26px; height: 2.5px; border-radius: 3px;
   background: #fff; transition: transform var(--t-fast), opacity var(--t-fast), background var(--t-fast);
@@ -1216,15 +1227,23 @@ ul, ol { list-style: none; }
    Si cambias este valor, cambia también el matchMedia de main.js. */
 @media (max-width: 1080px) {
   .navbar__toggle { display: flex; }
+  /* Anclado a la propia barra (top:100%), no a un píxel fijo: así sigue
+     encajando cuando la barra encoge al hacer scroll. Se oculta con
+     visibility, no solo con transform, porque un menú corto asomaba
+     por arriba de la pantalla. */
   .navbar__nav {
-    position: fixed; inset: 118px 0 auto 0;
+    position: absolute; top: 100%; left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--crema); padding: 1rem var(--gutter) 2rem;
     box-shadow: var(--shadow-md); border-top: 1px solid var(--gris-claro);
-    transform: translateY(-125%); transition: transform var(--t-med);
-    max-height: calc(100dvh - 118px); overflow-y: auto;
+    max-height: calc(100dvh - var(--nav-h-scrolled)); overflow-y: auto;
+    opacity: 0; visibility: hidden; transform: translateY(-10px);
+    transition: opacity var(--t-med), transform var(--t-med), visibility 0s linear 0.45s;
   }
-  .navbar__nav.is-open { transform: translateY(0); }
+  .navbar__nav.is-open {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity var(--t-med), transform var(--t-med), visibility 0s;
+  }
   .navbar__links { flex-direction: column; gap: 0; }
   .navbar__links a {
     display: block; padding: 0.95rem 0;
@@ -1236,7 +1255,9 @@ ul, ol { list-style: none; }
 
 /* ≤ 968px — tablet */
 @media (max-width: 968px) {
-  html { scroll-padding-top: 112px; }
+  :root { --nav-h: 92px; --nav-h-scrolled: 82px; }
+  .navbar__logo { height: 62px; }
+  .navbar.is-scrolled .navbar__logo { height: 54px; }
 
   .hero { padding-top: clamp(7rem, 18vw, 9rem); }
   .hero__grid { grid-template-columns: 1fr; }
@@ -1257,6 +1278,10 @@ ul, ol { list-style: none; }
 
 /* ≤ 768px — móvil grande */
 @media (max-width: 768px) {
+  :root { --nav-h: 80px; --nav-h-scrolled: 72px; }
+  .navbar__logo { height: 54px; }
+  .navbar.is-scrolled .navbar__logo { height: 48px; }
+
   .problem__grid { grid-template-columns: 1fr; }
   .testimonials { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr; }
@@ -1270,11 +1295,20 @@ ul, ol { list-style: none; }
 
 /* ≤ 480px — móvil pequeño */
 @media (max-width: 480px) {
-  :root { --gutter: 1.15rem; }
-  .gallery__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  :root { --gutter: 1.15rem; --nav-h: 72px; --nav-h-scrolled: 66px; }
+  .navbar__logo { height: 48px; }
+  .navbar.is-scrolled .navbar__logo { height: 44px; }
+
+  /* En una sola columna los mockups se estiraban a lo ancho y perdían
+     la proporción de móvil; en dos siguen leyéndose como pantallas. */
+  .gallery__grid { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1rem; }
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { width: 100%; }
-  .cta-final__form { flex-direction: column; }
+  /* En columna, el flex-basis del campo pasa a ser altura: sin esto
+     el input crecía hasta 280px de alto. */
+  .cta-final__form { flex-direction: column; align-items: stretch; }
+  .cta-final__input { flex: 0 0 auto; width: 100%; }
+  .cta-final__form .btn { width: 100%; }
   .footer__legal-links { flex-direction: column; align-items: center; gap: 0.9rem; }
   .footer__stores img { height: 42px; }
   .step { grid-template-columns: 1fr; gap: 1rem; }
