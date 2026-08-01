@@ -45,11 +45,21 @@
   --nav-h-scrolled: 72px;
 
   /* Radios generosos: tarjetas, imágenes y campos con esquina blanda. */
-  --r-card: 22px;
-  --r-media: 30px;
+  --r-card: 28px;
+  --r-media: 36px;
+  --r-chip: 999px;
 
   --m-linea: #e4e0d6;
   --m-fondo-suave: #faf8f3;
+
+  /* Profundidad. Sombras largas y muy abiertas, teñidas de verde en
+     vez de negras: sobre fondos cálidos el gris puro ensucia. */
+  --m-sombra-sm: 0 2px 8px rgba(29, 56, 28, 0.05),
+                 0 8px 24px rgba(29, 56, 28, 0.06);
+  --m-sombra-md: 0 4px 12px rgba(29, 56, 28, 0.06),
+                 0 18px 44px rgba(29, 56, 28, 0.10);
+  --m-sombra-lg: 0 8px 20px rgba(29, 56, 28, 0.08),
+                 0 34px 80px rgba(29, 56, 28, 0.16);
 
   /* ── Bloques de color por sección ──────────────────────────────
      El ritmo alternado necesita fondos sólidos, y ahí el contraste
@@ -76,6 +86,8 @@
   --m-sobre-oscuro:       #ffffff;
   --m-sobre-oscuro-tenue: rgba(255, 255, 255, 0.88);
   --m-linea-oscuro:       rgba(255, 255, 255, 0.22);
+  /* Superficie de tarjeta sobre los bloques verdes */
+  --m-superficie-oscura:  rgba(255, 255, 255, 0.07);
 }
 
 body.minimal {
@@ -94,6 +106,37 @@ body.minimal {
 
 /* El barrido de luz de los botones sobra en una página sobria. */
 .minimal .btn::before { display: none; }
+
+/* ── Aparición al hacer scroll ──────────────────────────────────
+   La mecánica ya existe: main.js §5 pone .is-visible con
+   IntersectionObserver y sale antes si prefersReducedMotion(). Aquí
+   solo se afina el gesto (fuera el desenfoque, entrada más corta) y
+   se escalonan las tarjetas de cada rejilla.
+
+   Va todo dentro de no-preference a propósito. Estas reglas tienen la
+   misma especificidad que las de styles.css y se cargan después, así
+   que sueltas también ganarían dentro de su bloque de reduce y
+   reintroducirían el desplazamiento que allí se anula. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    transform: translateY(26px);
+    filter: none;
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .js .reveal.is-visible { transform: none; }
+
+  /* Escalonado dentro de cada rejilla: las tarjetas entran una detrás
+     de otra en lugar de a la vez. Solo funciona donde el marcado trae
+     .reveal en cada hijo (features, pasos y citas); las listas que lo
+     llevan en el contenedor entran como un bloque. */
+  .js .m-features .m-feature.is-visible:nth-child(2) { transition-delay: 0.07s; }
+  .js .m-features .m-feature.is-visible:nth-child(3) { transition-delay: 0.14s; }
+  .js .m-features .m-feature.is-visible:nth-child(4) { transition-delay: 0.21s; }
+  .js .m-steps .step.is-visible:nth-child(2) { transition-delay: 0.07s; }
+  .js .m-steps .step.is-visible:nth-child(3) { transition-delay: 0.14s; }
+  .js .m-steps .step.is-visible:nth-child(4) { transition-delay: 0.21s; }
+  .js .m-quotes .m-quote.is-visible:nth-child(2) { transition-delay: 0.09s; }
+}
 
 /* ═══════════════════════════════════
    3. NAVBAR
@@ -185,14 +228,14 @@ body.minimal {
   padding-bottom: var(--space-section);
 }
 
-.m-hero__inner { max-width: 54rem; }
+.m-hero__inner { max-width: 62rem; }
 
 .m-hero__title {
   font-family: var(--font-display);
-  font-size: clamp(2.9rem, 6.2vw + 0.5rem, 5.6rem);
+  font-size: clamp(3.4rem, 7.6vw + 0.4rem, 7rem);
   font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.034em;
+  line-height: 0.96;
+  letter-spacing: -0.042em;
   color: var(--verde-oscuro);
   text-wrap: balance;
 }
@@ -237,34 +280,52 @@ body.minimal {
 }
 .m-btn--quiet:hover { box-shadow: inset 0 0 0 1px var(--verde-marca); color: var(--verde-texto); transform: none; }
 
+/* La imagen se contiene al ancho del container en lugar de ir a
+   sangre: con esquinas de 36px, un borde pegado al viewport se lee
+   como un error. El <figure> no está dentro de .container en el
+   marcado, y el marcado no se toca, así que se replica aquí. */
 .m-hero__figure {
   margin-top: clamp(3.5rem, 7vw, 6rem);
-  width: 100%;
+  margin-inline: auto;
+  width: calc(100% - var(--gutter) * 2);
+  max-width: var(--container-max);
   aspect-ratio: 21 / 9;
   overflow: hidden;
   border-radius: var(--r-media);
+  box-shadow: var(--m-sombra-lg);
 }
 .m-hero__figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* Las cifras dejan de ser una línea de texto y se montan sobre el
+   borde inferior de la foto como tarjetas sueltas. El tirón negativo
+   es proporcional para que el solape aguante al estrecharse. */
 .m-trust {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(2rem, 6vw, 4.5rem);
-  margin-top: clamp(3rem, 5vw, 4rem);
-  padding-top: 2.25rem;
-  border-top: 1px solid var(--m-linea);
-  font-size: 0.98rem;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  margin-top: clamp(-5rem, -7vw, -3.5rem);
+  padding-top: 0;
+  border-top: 0;
+  font-size: 0.95rem;
   color: var(--texto-suave);
+}
+.m-trust li {
+  background: var(--blanco);
+  border-radius: var(--r-card);
+  padding: clamp(1.25rem, 2.2vw, 1.9rem) clamp(1.1rem, 2vw, 1.75rem);
+  box-shadow: var(--m-sombra-md);
 }
 .m-trust strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 2.3rem;
+  font-size: clamp(1.9rem, 2.6vw + 0.6rem, 3rem);
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--verde-oscuro);
-  line-height: 1.1;
-  margin-bottom: 0.2rem;
+  line-height: 1;
+  margin-bottom: 0.45rem;
 }
 
 /* ═══════════════════════════════════
@@ -272,12 +333,22 @@ body.minimal {
 ═══════════════════════════════════ */
 
 /* ── El problema: lista, no tarjetas ── */
-.m-list { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
-.m-list li {
-  padding: 1.75rem 0;
-  border-top: 1px solid var(--m-linea);
+/* Cada problema es un bloque propio, no una fila de una lista.
+   stretch (y no start) para que las tres tarjetas midan lo mismo
+   aunque su texto ocupe distinto. */
+.m-list {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
 }
-.m-list li:last-child { border-bottom: 1px solid var(--m-linea); }
+.m-list li {
+  background: var(--blanco);
+  border-radius: var(--r-card);
+  padding: clamp(1.75rem, 2.6vw, 2.5rem);
+  box-shadow: var(--m-sombra-md);
+}
 .m-list__lead {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 1.7vw + 0.95rem, 1.95rem);
@@ -302,13 +373,35 @@ body.minimal {
 .m-statement em { font-style: italic; color: var(--terracota-texto); }
 
 /* ── Qué hace: cuatro bloques de texto ── */
+/* Bento: rejilla de 6 con bloques de dos tamaños, alternando el ancho
+   por filas para que no se lea como una tabla. El orden del marcado no
+   se toca; solo cambia cuánto ocupa cada bloque. */
 .m-features {
   margin-top: clamp(3rem, 6vw, 5rem);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(2.5rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 5rem);
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
 }
-.m-feature { padding-top: 1.75rem; border-top: 1px solid var(--m-linea); }
+.m-feature {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  background: var(--blanco);
+  border-radius: var(--r-card);
+  padding: clamp(1.75rem, 2.6vw, 2.75rem);
+  box-shadow: var(--m-sombra-md);
+}
+/* Manda el primero de cada fila. Los anchos son los dos bloques con más
+   contenido (la función principal y la de ahorro, que además lleva dos
+   cifras); si el ancho fuera el cuarto, se quedaría medio vacío al
+   igualar altura con su vecino. */
+.m-feature:nth-child(1),
+.m-feature:nth-child(3) { grid-column: span 4; }
+
+.m-feature:nth-child(1) .m-feature__title {
+  font-size: clamp(1.75rem, 2.2vw + 1rem, 2.6rem);
+}
 .m-feature__tag {
   font-size: 0.75rem;
   letter-spacing: 0.16em;
@@ -357,25 +450,34 @@ body.minimal {
    columnas distintas. La clase se conserva porque main.js observa
    "#steps .step". */
 .minimal .m-steps .step {
+  position: relative;
+  overflow: hidden;
   display: block;
-  padding: 1.75rem 0 0;
+  padding: clamp(2rem, 3vw, 3rem);
   border: 0;
-  border-top: 1px solid var(--m-linea);
-  border-radius: 0;
-  background: none;
+  border-radius: var(--r-card);
+  background: var(--m-superficie-oscura);
   transform: none;
 }
-/* El número es el elemento gráfico de la sección, no una etiqueta. */
+
+/* El número deja de ser una etiqueta y pasa a ser la marca de agua del
+   bloque: enorme, detrás del texto y recortado por el borde de la
+   tarjeta. El texto sube de capa para que nunca compita con él. */
 .m-step__num {
-  display: block;
+  position: absolute;
+  top: -0.18em;
+  right: 0.02em;
+  z-index: 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 4.5vw + 1rem, 5.5rem);
+  font-size: clamp(6.5rem, 9vw + 2.5rem, 12rem);
   font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
   color: var(--terracota-texto);
-  margin-bottom: 1.25rem;
+  pointer-events: none;
 }
+.m-step__title,
+.m-step__text { position: relative; z-index: 1; }
 .m-step__title {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 1.6vw + 0.95rem, 1.9rem);
@@ -386,10 +488,16 @@ body.minimal {
 }
 .m-step__text { margin-top: 0.75rem; color: var(--texto-suave); line-height: 1.7; }
 
-/* La landing principal ilumina el paso visible con .is-active. Aquí no
-   hay iluminación que aplicar, pero la clase sigue llegando: se ignora
-   a propósito para que el bloque no parpadee al hacer scroll. */
-.minimal .step.is-active { background: none; }
+/* main.js §10 marca con .is-active el paso que está en pantalla. En la
+   landing principal eso lo ilumina y lo desplaza; aquí solo hay que
+   neutralizar el gesto SIN borrar la superficie de la tarjeta. Un
+   background:none aquí deja sin fondo justo a los pasos visibles, que
+   es el único momento en que se miran. */
+.minimal .m-steps .step.is-active {
+  background: var(--m-superficie-oscura);
+  border-color: transparent;
+  transform: none;
+}
 
 /* ── Impacto ── */
 .m-stats {
@@ -417,6 +525,7 @@ body.minimal {
   height: auto;
   display: block;
   border-radius: var(--r-media);
+  box-shadow: var(--m-sombra-lg);
 }
 .m-moment figcaption {
   margin-top: 1.25rem;
@@ -439,7 +548,12 @@ body.minimal {
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(2.5rem, 5vw, 4.5rem);
 }
-.m-quote { padding-top: 1.75rem; border-top: 1px solid var(--m-linea); }
+.m-quote {
+  background: var(--blanco);
+  border-radius: var(--r-card);
+  padding: clamp(1.75rem, 2.6vw, 2.5rem);
+  box-shadow: var(--m-sombra-md);
+}
 .m-quote p {
   font-family: var(--font-display);
   font-size: clamp(1.3rem, 1.4vw + 0.95rem, 1.7rem);
@@ -504,10 +618,15 @@ body.minimal {
 .minimal .pantry-picker { gap: 0.5rem; margin-bottom: 1.5rem; }
 .minimal .pantry-picker__btn {
   background: var(--blanco);
-  border: 1px solid var(--m-linea);
+  border: 1.5px solid var(--m-linea);
   color: var(--gris-oscuro);
-  border-radius: var(--r-pill);
-  font-weight: 400;
+  border-radius: var(--r-chip);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.85rem 1.4rem;
+  box-shadow: var(--m-sombra-sm);
+  transition: transform var(--t-fast), box-shadow var(--t-fast),
+              background var(--t-fast), border-color var(--t-fast);
 }
 .minimal .pantry-picker__btn:hover { transform: none; border-color: var(--verde-marca); }
 .minimal .pantry-picker__btn[aria-pressed="true"] {
@@ -601,13 +720,24 @@ body.minimal {
 /* ── El problema · verde medio ──────────────────────────────── */
 #problema { background: var(--m-bloque-verde); }
 
+/* El <ul> vive dentro de .m-narrow (46rem) en el marcado, y tres
+   tarjetas ahí dentro salen a ~245px con el texto partido en pedazos.
+   Se suelta la restricción de la sección y se devuelve la medida de
+   lectura solo a los elementos de texto corrido. */
+#problema .m-narrow { max-width: none; }
+#problema .m-eyebrow,
+#problema .m-title,
+#problema .m-statement { max-width: 46rem; }
+
 /* ── Cómo funciona · verde hondo ────────────────────────────── */
 #como-funciona { background: var(--m-bloque-hondo); }
 
-/* Tratamiento común de los dos bloques verdes */
+/* Tratamiento común de los dos bloques verdes. Ojo: solo alcanza al
+   texto que va DIRECTO sobre el verde. Los problemas viven ahora en
+   tarjetas blancas y su texto conserva los tonos oscuros de siempre;
+   los pasos siguen sobre superficie translúcida y sí se aclaran. */
 #problema .m-title,
 #como-funciona .m-title,
-#problema .m-list__lead,
 #como-funciona .m-step__title { color: var(--m-sobre-oscuro); }
 
 #problema .m-eyebrow,
@@ -615,12 +745,7 @@ body.minimal {
 
 #problema .m-lead,
 #como-funciona .m-lead,
-#problema .m-list__note,
 #como-funciona .m-step__text { color: var(--m-sobre-oscuro-tenue); }
-
-#problema .m-list li,
-#problema .m-list li:last-child,
-#como-funciona .m-steps .step { border-color: var(--m-linea-oscuro); }
 
 #problema .m-statement { color: var(--m-sobre-oscuro); }
 /* La cursiva del cierre no puede ir en terracota sobre verde: se usa
@@ -630,7 +755,7 @@ body.minimal {
 /* Los números son el elemento gráfico de la sección. El amarillo de
    marca solo cumple contraste sobre el verde hondo (8.07:1); sobre el
    verde medio se quedaría en 3.74:1. */
-#como-funciona .m-step__num { color: var(--amarillo); }
+#como-funciona .m-step__num { color: var(--amarillo); opacity: 0.2; }
 
 /* ── El truco · blanco, con la tarjeta destacada ────────────── */
 #truco { background: var(--blanco); }
@@ -642,16 +767,19 @@ body.minimal {
   background: var(--m-fondo-suave);
 }
 
-/* La receta deja de ser una tarjeta plana: borde de color y sombra. */
+/* La receta es el objeto con más peso de la página: borde de color,
+   sombra marcada y un tirón hacia arriba que la deja montada sobre la
+   columna de ingredientes en lugar de alineada con ella. */
 #truco .spell-card {
   border: 1.5px solid rgba(69, 155, 91, 0.35);
-  box-shadow: 0 24px 60px rgba(29, 56, 28, 0.13);
+  box-shadow: var(--m-sombra-lg);
+  border-radius: var(--r-media);
 }
+#truco .trick__result { margin-top: clamp(-4rem, -4vw, -1.5rem); }
 #truco .spell-card__media { border-radius: 0; }
 
 /* ── Qué hace · amarillo muy diluido ────────────────────────── */
 #features { background: var(--m-bloque-amarillo); }
-#features .m-feature { border-color: rgba(29, 56, 28, 0.14); }
 
 /* ── Impacto · blanco ───────────────────────────────────────── */
 #proof { background: var(--blanco); }
@@ -683,7 +811,16 @@ body.minimal {
 
   .m-trick__grid { grid-template-columns: 1fr; }
   .m-trick__grid .trick__result { max-width: 30rem; }
-  .m-features, .m-steps { grid-template-columns: 1fr; }
+  /* En una columna, el tirón que monta la receta sobre los
+     ingredientes la solaparía de verdad: se anula. */
+  #truco .trick__result { margin-top: 0; }
+
+  /* El bento se pliega a dos columnas iguales y los pasos a una. */
+  .m-features { grid-template-columns: repeat(2, 1fr); }
+  .m-feature,
+  .m-feature:nth-child(1),
+  .m-feature:nth-child(3) { grid-column: span 1; }
+  .m-steps { grid-template-columns: 1fr; }
   .m-hero__figure { aspect-ratio: 16 / 9; }
 }
 
@@ -699,7 +836,13 @@ body.minimal {
 
   .m-stats { grid-template-columns: 1fr; gap: 2.5rem; }
   .m-quotes { grid-template-columns: 1fr; }
+  .m-features { grid-template-columns: 1fr; }
+  .m-list { grid-template-columns: 1fr; }
   .m-hero__figure { aspect-ratio: 4 / 3; }
+
+  /* Las cifras dejan de montarse sobre la foto: en vertical el solape
+     come demasiada imagen. Bajan a una fila normal bajo ella. */
+  .m-trust { margin-top: clamp(1.5rem, 4vw, 2.5rem); }
 }
 
 @media (max-width: 480px) {
@@ -716,7 +859,7 @@ body.minimal {
   .m-form__input { flex: 0 0 auto; width: 100%; }
   .m-form .btn { width: 100%; }
 
-  .m-trust { gap: 1.75rem 2.5rem; }
+  .m-trust { grid-template-columns: 1fr; gap: 0.75rem; }
   .m-saving { gap: 1.75rem; }
   .m-stores img { height: 38px; }
 }
