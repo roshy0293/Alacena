@@ -1,0 +1,588 @@
+/* ══════════════════════════════════════════════════════════════
+   ALACENA MÁGICA · minimal.css
+   Variante minimalista de la landing. Capa sobre styles.css,
+   igual que legal.css: aquí solo va lo que cambia.
+
+   La paleta NO se toca: los tokens de marca de styles.css
+   (--verde-marca, --terracota, --amarillo, --gris-oscuro) ya son
+   la versión suave de la paleta original y se heredan tal cual.
+   Lo que cambia es el aire, el ritmo tipográfico y la decoración.
+
+   1. Tokens redefinidos
+   2. Decoración que se apaga
+   3. Navbar
+   4. Primitivas de texto
+   5. Hero
+   6. Secciones de contenido
+   7. El truco (piel clara para la demo)
+   8. Pie
+   9. Responsive
+   ════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════
+   1. TOKENS REDEFINIDOS
+═══════════════════════════════════ */
+:root {
+  /* Más aire: el ritmo vertical es el que hace el trabajo. */
+  --space-section: clamp(6rem, 12vw, 11rem);
+  --container-max: 1100px;
+
+  /* Barra más baja que en la landing principal: el logo es menor y
+     no hay CTA gritando. Ojo: styles.css redefine --nav-h en sus
+     propios breakpoints, así que la escalera se rehace entera en la
+     sección 9 o los valores de allí ganarían por orden de cascada. */
+  --nav-h: 88px;
+  --nav-h-scrolled: 72px;
+
+  /* Radios contenidos: nada de blobs ni pastillas gigantes. */
+  --r-card: 4px;
+
+  /* Sombras casi inexistentes: se separa con espacio y línea, no con
+     profundidad. */
+  --m-linea: #e4e0d6;
+  --m-fondo-suave: #faf8f3;
+}
+
+body.minimal {
+  background: var(--blanco);
+  color: var(--gris-oscuro);
+}
+
+/* ═══════════════════════════════════
+   2. DECORACIÓN QUE SE APAGA
+   main.js se carga sin tocar. Las funcionalidades decorativas que
+   dependen de un elemento (destellos de fondo, parallax) mueren
+   solas porque esta página no trae sus enganches. El rastro del
+   cursor sí se engancha a document, así que se apaga desde aquí.
+═══════════════════════════════════ */
+.minimal .cursor-spark { display: none; }
+
+/* El barrido de luz de los botones sobra en una página sobria. */
+.minimal .btn::before { display: none; }
+
+/* ═══════════════════════════════════
+   3. NAVBAR
+═══════════════════════════════════ */
+.minimal .navbar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+}
+.minimal .navbar.is-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: var(--m-linea);
+  box-shadow: none;
+}
+
+/* Solo existe el logo a color: la página nunca es oscura. */
+.minimal .navbar__logo--color { display: block; height: 46px; }
+.minimal .navbar.is-scrolled .navbar__logo { height: 40px; }
+
+.minimal .navbar__links { gap: 2.25rem; }
+.minimal .navbar__links a,
+.minimal .navbar.is-scrolled .navbar__links a {
+  color: var(--gris-oscuro);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.minimal .navbar__links a::after { display: none; }
+.minimal .navbar__links a:hover,
+.minimal .navbar__links a.is-active { color: var(--verde-texto); }
+
+.minimal .navbar__cta {
+  background: transparent;
+  color: var(--verde-texto);
+  box-shadow: inset 0 0 0 1px var(--verde-marca);
+  border-radius: var(--r-pill);
+}
+.minimal .navbar__cta:hover {
+  background: var(--verde-marca);
+  color: #fff;
+  transform: none;
+}
+
+.minimal .navbar__toggle span { background: var(--gris-oscuro); }
+
+/* ═══════════════════════════════════
+   4. PRIMITIVAS DE TEXTO
+   La tipografía es el elemento gráfico principal, así que la
+   escala es más ancha y el interlineado más generoso.
+═══════════════════════════════════ */
+.m-narrow { max-width: 46rem; }
+
+.m-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--verde-texto);
+  margin-bottom: 1.5rem;
+}
+
+.m-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4vw + 0.6rem, 3.6rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--verde-oscuro);
+  text-wrap: balance;
+}
+
+.m-lead {
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--texto-suave);
+  margin-top: 1.5rem;
+  max-width: 38rem;
+}
+
+.m-section { padding-block: var(--space-section); }
+.m-section--tinted { background: var(--m-fondo-suave); }
+
+/* ═══════════════════════════════════
+   5. HERO
+═══════════════════════════════════ */
+.m-hero {
+  padding-top: calc(var(--nav-h) + clamp(4rem, 9vw, 8rem));
+  padding-bottom: var(--space-section);
+}
+
+.m-hero__inner { max-width: 54rem; }
+
+.m-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.6vw + 0.5rem, 5rem);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+  color: var(--verde-oscuro);
+  text-wrap: balance;
+}
+/* La segunda línea en cursiva es todo el "efecto" que hay: sin
+   degradado, sin brillo, sin subrayado pintado. */
+.m-hero__title em {
+  display: block;
+  font-style: italic;
+  color: var(--verde-texto);
+  margin-top: 0.15em;
+}
+
+.m-hero__sub {
+  font-size: clamp(1.1rem, 0.9vw + 0.85rem, 1.35rem);
+  line-height: 1.6;
+  color: var(--texto-suave);
+  margin-top: 2rem;
+  max-width: 34rem;
+}
+
+.m-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.75rem;
+}
+
+/* Botones: uno sólido, uno apenas dibujado. */
+.m-btn--solid {
+  background: var(--verde-oscuro);
+  color: #fff;
+  border-radius: var(--r-pill);
+  box-shadow: none;
+}
+.m-btn--solid:hover { background: var(--verde-texto); color: #fff; transform: none; }
+
+.m-btn--quiet {
+  background: transparent;
+  color: var(--verde-oscuro);
+  box-shadow: inset 0 0 0 1px var(--m-linea);
+  border-radius: var(--r-pill);
+}
+.m-btn--quiet:hover { box-shadow: inset 0 0 0 1px var(--verde-marca); color: var(--verde-texto); transform: none; }
+
+.m-hero__figure {
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  border-radius: var(--r-card);
+}
+.m-hero__figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.m-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(2rem, 6vw, 4.5rem);
+  margin-top: clamp(3rem, 5vw, 4rem);
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--m-linea);
+  font-size: 0.98rem;
+  color: var(--texto-suave);
+}
+.m-trust strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: var(--verde-oscuro);
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+
+/* ═══════════════════════════════════
+   6. SECCIONES DE CONTENIDO
+═══════════════════════════════════ */
+
+/* ── El problema: lista, no tarjetas ── */
+.m-list { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+.m-list li {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--m-linea);
+}
+.m-list li:last-child { border-bottom: 1px solid var(--m-linea); }
+.m-list__lead {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.4vw + 0.9rem, 1.6rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--verde-oscuro);
+}
+.m-list__note { margin-top: 0.5rem; color: var(--texto-suave); }
+
+.m-statement {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2vw + 0.9rem, 2.1rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--verde-oscuro);
+  text-wrap: balance;
+}
+.m-statement strong { font-weight: 600; }
+.m-statement em { font-style: italic; color: var(--terracota-texto); }
+
+/* ── Qué hace: cuatro bloques de texto ── */
+.m-features {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2.5rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 5rem);
+}
+.m-feature { padding-top: 1.75rem; border-top: 1px solid var(--m-linea); }
+.m-feature__tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--terracota-texto);
+  margin-bottom: 1rem;
+}
+.m-feature__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.4vw + 0.95rem, 1.75rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--verde-oscuro);
+}
+.m-feature__copy { margin-top: 0.9rem; color: var(--texto-suave); line-height: 1.7; }
+.m-feature__micro {
+  margin-top: 1.1rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--verde-texto);
+}
+
+.m-saving { display: flex; flex-wrap: wrap; gap: 2.5rem; margin-top: 2rem; }
+.m-saving__num {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 500;
+  color: var(--verde-oscuro);
+  line-height: 1;
+}
+.m-saving__label { margin-top: 0.4rem; font-size: 0.86rem; color: var(--texto-suave); max-width: 11rem; }
+
+/* ── Cómo funciona: lista numerada ── */
+.m-steps {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5.5rem);
+  counter-reset: none;
+}
+/* .step llega de styles.css como tarjeta en grid de dos columnas (número
+   a la izquierda, texto a la derecha). Aquí el marcado es plano, así que
+   hay que deshacer la caja entera o el número y el título se reparten en
+   columnas distintas. La clase se conserva porque main.js observa
+   "#steps .step". */
+.minimal .m-steps .step {
+  display: block;
+  padding: 1.75rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--m-linea);
+  border-radius: 0;
+  background: none;
+  transform: none;
+}
+.m-step__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--terracota-texto);
+  margin-bottom: 1rem;
+}
+.m-step__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.3vw + 0.9rem, 1.6rem);
+  font-weight: 500;
+  color: var(--verde-oscuro);
+  line-height: 1.25;
+}
+.m-step__text { margin-top: 0.75rem; color: var(--texto-suave); line-height: 1.7; }
+
+/* La landing principal ilumina el paso visible con .is-active. Aquí no
+   hay iluminación que aplicar, pero la clase sigue llegando: se ignora
+   a propósito para que el bloque no parpadee al hacer scroll. */
+.minimal .step.is-active { background: none; }
+
+/* ── Impacto ── */
+.m-stats {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--m-linea);
+  border-bottom: 1px solid var(--m-linea);
+}
+.m-stat__num {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 3.6vw + 0.8rem, 4rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--verde-oscuro);
+}
+.m-stat__label { margin-top: 0.6rem; color: var(--texto-suave); font-size: 0.95rem; }
+
+.m-moment { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
+.m-moment img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--r-card);
+}
+.m-moment figcaption {
+  margin-top: 1.25rem;
+  max-width: 40rem;
+  color: var(--texto-suave);
+  line-height: 1.7;
+}
+.m-moment figcaption strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--verde-oscuro);
+  margin-bottom: 0.3rem;
+}
+
+.m-quotes {
+  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+.m-quote { padding-top: 1.75rem; border-top: 1px solid var(--m-linea); }
+.m-quote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.2vw + 0.9rem, 1.45rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--verde-oscuro);
+}
+.m-quote footer { margin-top: 1.1rem; font-size: 0.9rem; color: var(--texto-suave); }
+.m-quote cite { font-style: normal; font-weight: 600; color: var(--gris-oscuro); }
+
+/* ── CTA final ── */
+.m-cta { background: var(--m-fondo-suave); text-align: center; }
+.m-cta__inner { display: flex; flex-direction: column; align-items: center; }
+.m-cta .m-lead { margin-inline: auto; }
+
+.m-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  width: 100%;
+  max-width: 34rem;
+}
+.m-form__input {
+  flex: 1 1 16rem;
+  min-width: 0;
+  padding: 1.1rem 1.4rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--gris-oscuro);
+  background: var(--blanco);
+  border: 1px solid var(--m-linea);
+  border-radius: var(--r-pill);
+  transition: border-color var(--t-fast);
+}
+.m-form__input::placeholder { color: #9c988f; }
+.m-form__input:focus { outline: none; border-color: var(--verde-marca); }
+.m-form__input.is-invalid { border-color: var(--terracota-texto); }
+
+.m-form__note { margin-top: 1.25rem; font-size: 0.92rem; color: var(--texto-suave); }
+.m-form__note.is-success { color: var(--verde-texto); }
+
+.m-stores { display: flex; gap: 1rem; margin-top: 2.5rem; }
+.m-stores img { height: 42px; width: auto; }
+
+/* ═══════════════════════════════════
+   7. EL TRUCO · piel clara para la demo
+   La lógica de main.js es la misma; lo que cambia es que el
+   componente ya no vive sobre fondo oscuro.
+═══════════════════════════════════ */
+.m-trick { background: var(--m-fondo-suave); }
+.m-trick__head { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+
+.m-trick__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.minimal .pantry-picker { gap: 0.5rem; margin-bottom: 1.5rem; }
+.minimal .pantry-picker__btn {
+  background: var(--blanco);
+  border: 1px solid var(--m-linea);
+  color: var(--gris-oscuro);
+  border-radius: var(--r-pill);
+  font-weight: 400;
+}
+.minimal .pantry-picker__btn:hover { transform: none; border-color: var(--verde-marca); }
+.minimal .pantry-picker__btn[aria-pressed="true"] {
+  background: var(--verde-oscuro);
+  border-color: var(--verde-oscuro);
+  color: #fff;
+  box-shadow: none;
+}
+
+.m-trick__hint { font-size: 0.88rem; color: var(--texto-suave); }
+
+.minimal .spell-card {
+  background: var(--blanco);
+  border: 1px solid var(--m-linea);
+  border-radius: var(--r-card);
+  backdrop-filter: none;
+  box-shadow: none;
+}
+.minimal .spell-card__media { aspect-ratio: 16 / 10; background: var(--crema); }
+.minimal .spell-card:hover .spell-card__media img { transform: none; }
+.minimal .spell-card__match {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--m-linea);
+  color: var(--verde-texto);
+  backdrop-filter: none;
+  font-weight: 600;
+}
+.minimal .spell-card__body { padding: 1.6rem 1.75rem 1.9rem; }
+.minimal .spell-card__name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--verde-oscuro);
+}
+.minimal .spell-card__meta { color: var(--texto-suave); }
+.minimal .spell-card__use {
+  background: transparent;
+  border: 1px solid var(--m-linea);
+  color: var(--texto-suave);
+}
+.minimal .spell-card__use--missing {
+  background: transparent;
+  border-color: var(--m-linea);
+  color: #a5a099;
+}
+.minimal .spell-card__empty p { color: var(--texto-suave); }
+.minimal .spell-card__empty .spark { animation: none; }
+
+.minimal .trick__more { color: var(--texto-suave); text-align: left; margin-top: 1.25rem; }
+.minimal .trick__more strong { color: var(--verde-texto); }
+
+/* ═══════════════════════════════════
+   8. PIE
+═══════════════════════════════════ */
+.m-footer {
+  padding-block: clamp(3.5rem, 7vw, 5rem);
+  border-top: 1px solid var(--m-linea);
+}
+.m-footer__inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.m-footer__brand img { height: 64px; width: auto; }
+.m-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2.25rem;
+  margin-top: 2.25rem;
+}
+.m-footer__links a { font-size: 0.92rem; color: var(--texto-suave); }
+.m-footer__links a:hover { color: var(--verde-texto); }
+.m-footer__copy { margin-top: 2.25rem; font-size: 0.82rem; color: var(--texto-suave); }
+
+/* ═══════════════════════════════════
+   9. RESPONSIVE
+   La escalera de --nav-h se rehace entera: styles.css la redefine
+   en sus propios breakpoints y, al ir minimal.css después, un valor
+   suelto en :root ganaría en todos los anchos y descuadraría la
+   barra, el scroll-padding y el alto del menú desplegable.
+═══════════════════════════════════ */
+@media (max-width: 968px) {
+  :root { --nav-h: 76px; --nav-h-scrolled: 66px; }
+  .minimal .navbar__logo--color { height: 42px; }
+  .minimal .navbar.is-scrolled .navbar__logo { height: 38px; }
+
+  .m-trick__grid { grid-template-columns: 1fr; }
+  .m-trick__grid .trick__result { max-width: 30rem; }
+  .m-features, .m-steps { grid-template-columns: 1fr; }
+  .m-hero__figure { aspect-ratio: 16 / 9; }
+}
+
+@media (max-width: 768px) {
+  :root { --nav-h: 70px; --nav-h-scrolled: 62px; }
+  .minimal .navbar__logo--color { height: 38px; }
+  .minimal .navbar.is-scrolled .navbar__logo { height: 34px; }
+
+  /* El menú desplegable hereda el panel de styles.css; solo hay que
+     devolverle el fondo blanco de esta variante. */
+  .minimal .navbar__nav { background: var(--blanco); }
+  .minimal .navbar__links a { border-bottom-color: var(--m-linea); }
+
+  .m-stats { grid-template-columns: 1fr; gap: 2.5rem; }
+  .m-quotes { grid-template-columns: 1fr; }
+  .m-hero__figure { aspect-ratio: 4 / 3; }
+}
+
+@media (max-width: 480px) {
+  :root { --nav-h: 64px; --nav-h-scrolled: 58px; }
+  .minimal .navbar__logo--color { height: 34px; }
+  .minimal .navbar.is-scrolled .navbar__logo { height: 32px; }
+
+  .m-hero__actions { flex-direction: column; align-items: stretch; }
+  .m-hero__actions .btn { width: 100%; }
+
+  /* En columna el flex-basis del campo se interpreta como altura:
+     el mismo tropiezo que ya corregimos en la landing principal. */
+  .m-form { flex-direction: column; }
+  .m-form__input { flex: 0 0 auto; width: 100%; }
+  .m-form .btn { width: 100%; }
+
+  .m-trust { gap: 1.75rem 2.5rem; }
+  .m-saving { gap: 1.75rem; }
+  .m-stores img { height: 38px; }
+}

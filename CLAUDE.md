@@ -29,8 +29,11 @@ Hay dos niveles. `css/styles.css` es la base de **todas** las páginas (tokens, 
 | Página | CSS | JS |
 |---|---|---|
 | `index.html` | `styles.css` | `main.js` |
+| `minimal.html` | `styles.css` + `minimal.css` | `main.js` |
 | `privacy` · `terms` · `support` · `gracias` | `styles.css` + `legal.css` | `legal.js` |
 | `unsubscribe.html` | `styles.css` + `legal.css` | `legal.js` + `unsubscribe.js` |
+
+`minimal.html` es una variante alternativa de la portada, no un sustituto: comparte `main.js` sin modificarlo y se apoya en que las IIFE decorativas se desactivan solas cuando su enganche no está en el marcado. `minimal.css` **rehace la escalera de `--nav-h` en sus propios breakpoints**, porque al cargarse después que `styles.css` un valor suelto en `:root` ganaría en todos los anchos.
 
 `main.js` y `legal.js` **nunca conviven**: el menú móvil está duplicado a propósito en ambos para que las páginas legales no carguen los 500 líneas del landing. Si tocas el comportamiento del menú, tócalo en los dos sitios.
 
