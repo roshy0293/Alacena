@@ -28,6 +28,13 @@
 </head>
 
 <body class="minimal">
+  <!-- Preloader · se va solo con una animación CSS de 1,25 s. Sin JS a
+       propósito: si un script fallara, la página quedaría tapada.
+       aria-hidden porque no aporta nada a quien no lo ve. -->
+  <div class="m-preloader" aria-hidden="true">
+    <img src="assets/logos/Isotipo.svg" alt="" width="64" height="79" />
+  </div>
+
   <a class="skip-link" href="#main">Saltar al contenido principal</a>
 
   <!-- ══════════════════════════════════════════════
@@ -51,6 +58,7 @@
           <li><a href="#truco">El truco</a></li>
           <li><a href="#features">Qué hace</a></li>
           <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#galeria">La app</a></li>
         </ul>
         <a href="#cta-final" class="btn btn--sm navbar__cta">Descubre la magia →</a>
       </nav>
@@ -94,14 +102,43 @@
         </div>
       </div>
 
-      <figure class="m-hero__figure reveal reveal--delay-2">
-        <img
-          src="assets/images/1 - Alacena Magica.jpg"
-          alt="Una persona mira su nevera llena de ingredientes frescos mientras consulta recetas en el móvil"
-          width="1024" height="1024"
-          fetchpriority="high"
-        />
-      </figure>
+      <!-- La foto y los badges van juntos para que los segundos puedan
+           posicionarse contra ella. Mismo contenido que los float-card
+           de index.html, con piel de vidrio. -->
+      <div class="m-hero__media reveal reveal--delay-2">
+        <figure class="m-hero__figure">
+          <img
+            src="assets/images/1 - Alacena Magica.jpg"
+            alt="Una persona mira su nevera llena de ingredientes frescos mientras consulta recetas en el móvil"
+            width="1024" height="1024"
+            fetchpriority="high"
+          />
+        </figure>
+
+        <div class="m-badge m-badge--a">
+          <span class="m-badge__icon" aria-hidden="true">✨</span>
+          <span>
+            <strong class="m-badge__num">12 recetas</strong>
+            <span class="m-badge__label">con lo que ya tienes</span>
+          </span>
+        </div>
+
+        <div class="m-badge m-badge--b">
+          <span class="m-badge__icon" aria-hidden="true">💚</span>
+          <span>
+            <strong class="m-badge__num">3 ingredientes</strong>
+            <span class="m-badge__label">salvados hoy</span>
+          </span>
+        </div>
+
+        <div class="m-badge m-badge--c">
+          <span class="m-badge__icon" aria-hidden="true">🥑</span>
+          <span>
+            <strong class="m-badge__num">Modo Keto</strong>
+            <span class="m-badge__label">activado</span>
+          </span>
+        </div>
+      </div>
 
       <div class="container">
         <ul class="m-trust reveal">
@@ -226,6 +263,7 @@
 
         <div class="m-features">
           <article class="m-feature reveal">
+            <span class="m-feature__icon m-feature__icon--verde" aria-hidden="true">🍽️</span>
             <p class="m-feature__tag">Recetas inteligentes</p>
             <h3 class="m-feature__title">Recetas que se adaptan a TI</h3>
             <p class="m-feature__copy">
@@ -236,6 +274,7 @@
           </article>
 
           <article class="m-feature reveal">
+            <span class="m-feature__icon m-feature__icon--naranja" aria-hidden="true">🥑</span>
             <p class="m-feature__tag">Dietas a tu medida</p>
             <h3 class="m-feature__title">Tu dieta, tus reglas</h3>
             <p class="m-feature__copy">
@@ -245,6 +284,7 @@
           </article>
 
           <article class="m-feature reveal">
+            <span class="m-feature__icon m-feature__icon--verde" aria-hidden="true">💚</span>
             <p class="m-feature__tag">Menos desperdicio</p>
             <h3 class="m-feature__title">Menos desperdicio, más ahorro</h3>
             <p class="m-feature__copy">
@@ -266,6 +306,7 @@
           </article>
 
           <article class="m-feature reveal">
+            <span class="m-feature__icon m-feature__icon--oro" aria-hidden="true">⏳</span>
             <p class="m-feature__tag">Antes de que sea tarde</p>
             <h3 class="m-feature__title">Te avisamos a tiempo</h3>
             <p class="m-feature__copy">
@@ -355,19 +396,110 @@
         <div class="m-quotes">
           <blockquote class="m-quote reveal">
             <p>Pensé que cocinar con lo que tenía era imposible. ¡Alacena Mágica me ha sorprendido!</p>
-            <footer><cite>María</cite> · Madrid</footer>
+            <footer>
+              <span class="m-quote__avatar" aria-hidden="true">M</span>
+              <span><cite>María</cite> · Madrid</span>
+            </footer>
           </blockquote>
 
           <blockquote class="m-quote reveal">
             <p>Por fin una app que no me hace sentir culpable por no tener ingredientes gourmet.</p>
-            <footer><cite>Carlos</cite> · Barcelona</footer>
+            <footer>
+              <span class="m-quote__avatar" aria-hidden="true">C</span>
+              <span><cite>Carlos</cite> · Barcelona</span>
+            </footer>
           </blockquote>
         </div>
       </div>
     </section>
 
     <!-- ══════════════════════════════════════════════
-         7 · CTA FINAL
+         7 · LA APP POR DENTRO
+         Las cuatro pantallas del original. El marcado interno de los
+         mockups es el mismo que en index.html para que sigan saliendo
+         de styles.css; minimal.css solo cambia el marco y la rejilla.
+    ═══════════════════════════════════════════════ -->
+    <section class="m-section" id="galeria">
+      <div class="container">
+        <div class="m-narrow">
+          <p class="m-eyebrow reveal">La app por dentro</p>
+          <h2 class="m-title reveal">Así se ve la magia en acción</h2>
+        </div>
+
+        <div class="m-gallery">
+          <figure class="m-gallery__item reveal">
+            <div class="phone phone--mini">
+              <div class="phone__screen">
+                <div class="mini mini--home">
+                  <div class="mini__bar"></div>
+                  <div class="mini__magic">✨ 12 recetas</div>
+                  <div class="mini__chips"><span></span><span></span><span></span></div>
+                  <div class="mini__card mini__card--sun"></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="m-gallery__cap">
+              Inicio
+              <span class="m-gallery__note">Tu resumen del día</span>
+            </figcaption>
+          </figure>
+
+          <figure class="m-gallery__item reveal">
+            <div class="phone phone--mini">
+              <div class="phone__screen">
+                <div class="mini mini--gen">
+                  <div class="mini__bar"></div>
+                  <div class="mini__ingredients"><span></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span></div>
+                  <div class="mini__btn"></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="m-gallery__cap">
+              Generar receta
+              <span class="m-gallery__note">Elige y crea</span>
+            </figcaption>
+          </figure>
+
+          <figure class="m-gallery__item reveal">
+            <div class="phone phone--mini">
+              <div class="phone__screen">
+                <div class="mini mini--list">
+                  <div class="mini__filters"><span class="on"></span><span></span><span></span></div>
+                  <div class="mini__row mini__card--sun"></div>
+                  <div class="mini__row mini__card--fresh"></div>
+                  <div class="mini__row mini__card--warm"></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="m-gallery__cap">
+              Recetas filtradas
+              <span class="m-gallery__note">Tu dieta, tus reglas</span>
+            </figcaption>
+          </figure>
+
+          <figure class="m-gallery__item reveal">
+            <div class="phone phone--mini">
+              <div class="phone__screen">
+                <div class="mini mini--pantry">
+                  <div class="mini__bar"></div>
+                  <div class="mini__stats"><span></span><span></span></div>
+                  <div class="mini__pantry-row"><b></b><i class="ok"></i></div>
+                  <div class="mini__pantry-row"><b></b><i class="warn"></i></div>
+                  <div class="mini__pantry-row"><b></b><i class="urgent"></i></div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="m-gallery__cap">
+              Tu despensa
+              <span class="m-gallery__note">Nada se pierde</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         8 · CTA FINAL
     ═══════════════════════════════════════════════ -->
     <section class="m-section m-cta" id="cta-final">
       <div class="container m-narrow m-cta__inner">
