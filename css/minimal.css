@@ -8,25 +8,21 @@
    la versión suave de la paleta original y se heredan tal cual.
    Lo que cambia es el aire, el ritmo tipográfico y la decoración.
 
-   El recorrido de la página alterna bloques de color, en lugar de
-   ser un fondo crema continuo:
-
-     hero      crema claro     proof     blanco
-     problema  verde medio     cta       naranja
-     truco     blanco          pie       verde hondo
-     features  amarillo diluido
-     pasos     verde hondo
+   v3: recorrido claro de principio a fin. El color vive en los
+   acentos (botones, badges, chips de icono, bordes), no en fondos de
+   sección; el pie es la única pieza oscura, como cierre.
 
    1. Tokens redefinidos
-   2. Decoración que se apaga
+   2. Decoración que se apaga y aparición al scroll
    3. Navbar
    4. Primitivas de texto
    5. Hero
    6. Secciones de contenido
    7. El truco (piel clara para la demo)
    8. Pie
-   9. Bloques de color por sección
-  10. Responsive
+   9. Ritmo de fondos
+  10. Piezas de v3 (preloader, badges, iconos, galería, avatares)
+  11. Responsive
    ════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════
@@ -61,33 +57,23 @@
   --m-sombra-lg: 0 8px 20px rgba(29, 56, 28, 0.08),
                  0 34px 80px rgba(29, 56, 28, 0.16);
 
-  /* ── Bloques de color por sección ──────────────────────────────
-     El ritmo alternado necesita fondos sólidos, y ahí el contraste
-     manda sobre la elección de tono. Medido sobre la paleta:
+  /* ── Color y contraste ─────────────────────────────────────────
+     v3 no pinta secciones de color: los fondos son claros y el color
+     va a botones, badges, chips y bordes. Queda una sola pieza
+     oscura, el pie. Medido sobre la paleta, para no repetir el error
+     de dar por buena una combinación:
 
-       #459b5b + blanco ....... 3.45:1  ✗ (AA pide 4.5:1)
-       #2f7044 + blanco ....... 5.96:1  ✓
-       #1d381c + blanco ...... 12.85:1  ✓
-       #e28538 + verde oscuro   4.68:1  ✓ (con blanco baja a 2.75)
-       #fbf4cf + verde oscuro  11.59:1  ✓
+       #1d381c + blanco ...... 12.85:1  ✓  (pie)
+       #e28538 + verde oscuro   4.68:1  ✓  (botón del CTA)
+       #fbeadb + naranja texto  4.89:1  ✓  (chip y fondo del CTA)
+       #e6f2ea + verde texto    5.18:1  ✓  (chip y avatares)
+       #459b5b + blanco ....... 3.45:1  ✗  nunca bajo texto pequeño
 
-     Por eso los bloques verdes no usan #459b5b de fondo: no hay
-     ningún color de texto que cumpla sobre él. Se usan sus dos
-     variantes accesibles, ya presentes en styles.css, y #459b5b
-     queda para acentos y bordes, donde no carga texto pequeño. */
-  --m-bloque-verde:  var(--verde-texto);    /* #2f7044 */
-  --m-bloque-hondo:  var(--verde-oscuro);   /* #1d381c */
-  --m-bloque-amarillo: var(--amarillo-suave); /* #fbf4cf */
-  --m-bloque-naranja: var(--terracota);     /* #e28538 */
-
-  /* Tipografía sobre fondo oscuro. El tenue va al 88% y no más abajo:
-     sobre el verde medio, un blanco al 78% se queda justo en 4.50:1 y
-     no deja margen. */
+     Por eso #459b5b solo aparece como relleno de formas: la marca de
+     agua de los pasos, bordes y estados de chip. */
+  --m-pie-fondo:          var(--verde-oscuro);  /* #1d381c */
   --m-sobre-oscuro:       #ffffff;
   --m-sobre-oscuro-tenue: rgba(255, 255, 255, 0.88);
-  --m-linea-oscuro:       rgba(255, 255, 255, 0.22);
-  /* Superficie de tarjeta sobre los bloques verdes */
-  --m-superficie-oscura:  rgba(255, 255, 255, 0.07);
 }
 
 body.minimal {
@@ -284,11 +270,17 @@ body.minimal {
    sangre: con esquinas de 36px, un borde pegado al viewport se lee
    como un error. El <figure> no está dentro de .container en el
    marcado, y el marcado no se toca, así que se replica aquí. */
-.m-hero__figure {
+/* El envoltorio lleva la contención y sirve de referencia a los badges;
+   la figura solo rellena. */
+.m-hero__media {
+  position: relative;
   margin-top: clamp(3.5rem, 7vw, 6rem);
   margin-inline: auto;
   width: calc(100% - var(--gutter) * 2);
   max-width: var(--container-max);
+}
+.m-hero__figure {
+  width: 100%;
   aspect-ratio: 21 / 9;
   overflow: hidden;
   border-radius: var(--r-media);
@@ -456,7 +448,8 @@ body.minimal {
   padding: clamp(2rem, 3vw, 3rem);
   border: 0;
   border-radius: var(--r-card);
-  background: var(--m-superficie-oscura);
+  background: var(--blanco);
+  box-shadow: var(--m-sombra-md);
   transform: none;
 }
 
@@ -494,7 +487,8 @@ body.minimal {
    background:none aquí deja sin fondo justo a los pasos visibles, que
    es el único momento en que se miran. */
 .minimal .m-steps .step.is-active {
-  background: var(--m-superficie-oscura);
+  background: var(--blanco);
+  box-shadow: var(--m-sombra-md);
   border-color: transparent;
   transform: none;
 }
@@ -683,7 +677,7 @@ body.minimal {
 ═══════════════════════════════════ */
 .m-footer {
   padding-block: clamp(4rem, 8vw, 6rem);
-  background: var(--m-bloque-hondo);
+  background: var(--m-pie-fondo);
   color: var(--m-sobre-oscuro-tenue);
 }
 .m-footer__inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -707,18 +701,32 @@ body.minimal {
 .m-footer__copy { margin-top: 2.25rem; font-size: 0.82rem; color: rgba(255, 255, 255, 0.62); }
 
 /* ═══════════════════════════════════
-   9. BLOQUES DE COLOR POR SECCIÓN
-   El ritmo alternado es lo que quita la sensación de página plana.
-   Las secciones se pintan por id porque el marcado no se toca: el id
-   (1,0,0) gana a las clases de las secciones 4-8 sin necesidad de
-   !important.
+   9. RITMO DE FONDOS
+   v3: el recorrido deja de alternar bloques oscuros y pasa a ser
+   claro de principio a fin. El color se va a los acentos (botones,
+   badges, chips de icono, bordes) en lugar de pintar secciones
+   enteras. Las tarjetas caen siempre sobre fondo teñido para que la
+   sombra tenga contra qué recortarse.
+
+   Se pinta por id porque así el fondo gana a las clases de las
+   secciones 4-8 sin !important.
+
+     hero      #ffffff      proof    #faf8f3
+     problema  #faf8f3      galeria  #ffffff
+     truco     #ffffff      cta      #fbeadb
+     features  #faf8f3      pie      #1d381c
+     pasos     #e6f2ea
+
+   El pie es la única pieza oscura, como cierre.
 ═══════════════════════════════════ */
-
-/* ── Hero · crema claro ─────────────────────────────────────── */
-#hero { background: var(--m-fondo-suave); }
-
-/* ── El problema · verde medio ──────────────────────────────── */
-#problema { background: var(--m-bloque-verde); }
+#hero     { background: var(--blanco); }
+#problema { background: var(--m-fondo-suave); }
+#truco    { background: var(--blanco); }
+#features { background: var(--m-fondo-suave); }
+#como-funciona { background: var(--verde-suave); }
+#proof    { background: var(--m-fondo-suave); }
+#galeria  { background: var(--blanco); }
+#cta-final { background: var(--terracota-suave); }
 
 /* El <ul> vive dentro de .m-narrow (46rem) en el marcado, y tres
    tarjetas ahí dentro salen a ~245px con el texto partido en pedazos.
@@ -729,36 +737,10 @@ body.minimal {
 #problema .m-title,
 #problema .m-statement { max-width: 46rem; }
 
-/* ── Cómo funciona · verde hondo ────────────────────────────── */
-#como-funciona { background: var(--m-bloque-hondo); }
-
-/* Tratamiento común de los dos bloques verdes. Ojo: solo alcanza al
-   texto que va DIRECTO sobre el verde. Los problemas viven ahora en
-   tarjetas blancas y su texto conserva los tonos oscuros de siempre;
-   los pasos siguen sobre superficie translúcida y sí se aclaran. */
-#problema .m-title,
-#como-funciona .m-title,
-#como-funciona .m-step__title { color: var(--m-sobre-oscuro); }
-
-#problema .m-eyebrow,
-#como-funciona .m-eyebrow { color: var(--m-sobre-oscuro-tenue); }
-
-#problema .m-lead,
-#como-funciona .m-lead,
-#como-funciona .m-step__text { color: var(--m-sobre-oscuro-tenue); }
-
-#problema .m-statement { color: var(--m-sobre-oscuro); }
-/* La cursiva del cierre no puede ir en terracota sobre verde: se usa
-   el amarillo diluido, que sobre este verde da 5.38:1. */
-#problema .m-statement em { color: var(--amarillo-suave); }
-
-/* Los números son el elemento gráfico de la sección. El amarillo de
-   marca solo cumple contraste sobre el verde hondo (8.07:1); sobre el
-   verde medio se quedaría en 3.74:1. */
-#como-funciona .m-step__num { color: var(--amarillo); opacity: 0.2; }
-
-/* ── El truco · blanco, con la tarjeta destacada ────────────── */
-#truco { background: var(--blanco); }
+/* El número sigue siendo la marca de agua del bloque, ahora en verde
+   de marca: sobre tarjeta blanca, el amarillo al 20% desaparecía. Al
+   22% queda como textura, no como dato que competir con el título. */
+#como-funciona .m-step__num { color: var(--verde-marca); opacity: 0.22; }
 
 /* Sobre blanco, las pastillas sin marcar necesitan cuerpo. Se excluye
    el estado marcado a propósito: un id (1,1,0) le gana al selector de
@@ -778,27 +760,202 @@ body.minimal {
 #truco .trick__result { margin-top: clamp(-4rem, -4vw, -1.5rem); }
 #truco .spell-card__media { border-radius: 0; }
 
-/* ── Qué hace · amarillo muy diluido ────────────────────────── */
-#features { background: var(--m-bloque-amarillo); }
-
-/* ── Impacto · blanco ───────────────────────────────────────── */
-#proof { background: var(--blanco); }
-
-/* ── CTA final · naranja ────────────────────────────────────── */
-/* Sobre #e28538 solo el verde oscuro cumple AA (4.68:1). El blanco se
-   queda en 2.75:1, así que todo el texto del bloque va en verde. */
-#cta-final { background: var(--m-bloque-naranja); }
-#cta-final .m-title,
+/* ── CTA final · naranja diluido ────────────────────────────── */
+/* El fondo pasa de #e28538 sólido a su versión suave. El naranja de
+   marca se queda en el botón, donde va con texto verde oscuro
+   (4.68:1); con blanco caería a 2.75:1. */
+#cta-final .m-title { color: var(--verde-oscuro); }
 #cta-final .m-lead,
-#cta-final .m-form__note { color: var(--verde-oscuro); }
-#cta-final .m-form__input { border-color: rgba(29, 56, 28, 0.2); }
+#cta-final .m-form__note { color: var(--terracota-texto); }
+#cta-final .m-form__input { border-color: rgba(160, 80, 26, 0.28); }
 /* Los estados del campo y del aviso se repiten con el id delante: si no,
    la regla de arriba (1,1,0) los pisa y el error deja de verse. */
-#cta-final .m-form__input.is-invalid { border-color: var(--verde-oscuro); border-width: 2px; }
-#cta-final .m-form__note.is-success { color: var(--verde-oscuro); font-weight: 600; }
+#cta-final .m-form__input.is-invalid { border-color: var(--terracota-texto); border-width: 2px; }
+#cta-final .m-form__note.is-success { color: var(--verde-texto); font-weight: 600; }
+#cta-final .m-btn--solid { background: var(--terracota); color: var(--verde-oscuro); }
+#cta-final .m-btn--solid:hover { background: #d4762c; color: var(--verde-oscuro); }
 
 /* ═══════════════════════════════════
-  10. RESPONSIVE
+  10. PIEZAS DE v3
+═══════════════════════════════════ */
+
+/* ── Preloader ──────────────────────────────────────────────────
+   Por defecto NO existe: oculto, sin opacidad y sin capturar clics.
+   Solo aparece si hay JS (clase .js) y el sistema no pide movimiento
+   reducido. Así, si algo falla o alguien desactiva animaciones, nadie
+   se queda mirando una pantalla tapada. No interviene ningún script:
+   la animación CSS lo retira sola con forwards. */
+.m-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+  background: var(--m-fondo-suave);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.m-preloader img { width: 64px; height: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .m-preloader {
+    opacity: 1;
+    visibility: visible;
+    animation: m-preloader-salida 1.25s var(--ease) forwards;
+  }
+  .js .m-preloader img { animation: m-preloader-logo 0.45s var(--ease) both; }
+}
+
+@keyframes m-preloader-salida {
+  0%, 72%  { opacity: 1; visibility: visible; }
+  100%     { opacity: 0; visibility: hidden; }
+}
+@keyframes m-preloader-logo {
+  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Badges del hero · vidrio ───────────────────────────────────
+   Blanco al 72% con desenfoque por detrás: el texto en verde oscuro
+   da 11.5:1 sobre el vidrio compuesto, así que se lee pase lo que
+   pase por debajo de la foto. */
+.m-badge {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--r-chip);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--m-sombra-md);
+  color: var(--verde-oscuro);
+}
+.m-badge__icon  { font-size: 1.3rem; line-height: 1; }
+.m-badge__num   { display: block; font-weight: 700; font-size: 0.95rem; line-height: 1.15; }
+.m-badge__label { display: block; font-size: 0.78rem; color: var(--texto-suave); }
+
+/* Reparto pensado contra la foto y contra las tarjetas de cifras, que
+   suben unos 84px sobre el borde inferior: por debajo del 78% no cabe
+   nada o se pisan. */
+.m-badge--a { top:  7%; left:  -1.5%; }
+.m-badge--b { top: 58%; left:   3%; }
+.m-badge--c { top: 30%; right: -1%; }
+
+/* Flotación. Keyframe propio y NO una redefinición de @keyframes float:
+   styles.css ya lo usa para el estado vacío de la demo, y pisarlo
+   cambiaría también esa animación. */
+@keyframes m-flotar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .m-badge { animation: m-flotar 6s var(--ease) infinite; }
+  .m-badge--b { animation-delay: 1.2s; }
+  .m-badge--c { animation-delay: 2.4s; }
+}
+
+/* ── Iconos de feature ──────────────────────────────────────────
+   Chip de color por función, con el emoji del original. */
+.m-feature__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  font-size: 1.6rem;
+  line-height: 1;
+  margin-bottom: 1.35rem;
+}
+.m-feature__icon--verde   { background: var(--verde-suave); }
+.m-feature__icon--naranja { background: var(--terracota-suave); }
+.m-feature__icon--oro     { background: var(--amarillo-suave); }
+
+/* ── La app por dentro ──────────────────────────────────────────
+   El interior de los mockups sale de styles.css sin tocar; aquí solo
+   se define la rejilla y el marco. */
+.m-gallery {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+.m-gallery__item { text-align: center; }
+.minimal .m-gallery .phone--mini {
+  box-shadow: var(--m-sombra-md);
+  margin-inline: auto;
+}
+/* styles.css fija min-height:210px en la mini pantalla, pensada para la
+   rejilla de dos columnas del original. A cuatro por fila el resultado
+   es una caja casi cuadrada, no un móvil: se cambia por proporción. */
+.minimal .m-gallery .phone--mini .phone__screen {
+  min-height: 0;
+  aspect-ratio: 9 / 16;
+}
+.m-gallery__cap {
+  margin-top: 1.1rem;
+  font-weight: 600;
+  color: var(--verde-oscuro);
+}
+.m-gallery__note {
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+/* ── Avatares de los testimonios ────────────────────────────────
+   La inicial, como en el original. */
+.m-quote footer { display: flex; align-items: center; gap: 0.85rem; }
+.m-quote__avatar {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--verde-suave);
+  color: var(--verde-texto);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+/* ── Hover con escala ───────────────────────────────────────────
+   Solo con puntero fino: en táctil el :hover se queda pegado tras
+   tocar. Y solo sin movimiento reducido. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .m-trust li,
+  .m-list li,
+  .m-feature,
+  .m-quote,
+  .m-gallery__item .phone--mini,
+  .m-feature__icon,
+  .minimal .pantry-picker__btn {
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease),
+                background var(--t-fast), border-color var(--t-fast);
+  }
+  .m-trust li:hover,
+  .m-list li:hover,
+  .m-feature:hover,
+  .m-quote:hover {
+    transform: scale(1.02);
+    box-shadow: var(--m-sombra-lg);
+  }
+  .m-gallery__item:hover .phone--mini { transform: scale(1.03); }
+  .m-feature:hover .m-feature__icon  { transform: scale(1.06); }
+  /* Gana a la regla de la sección 7, que anula el desplazamiento del
+     chip; aquí sí queremos gesto, pero en escala. */
+  .minimal .pantry-picker__btn:hover { transform: scale(1.04); }
+}
+
+/* ═══════════════════════════════════
+  11. RESPONSIVE
    La escalera de --nav-h se rehace entera: styles.css la redefine
    en sus propios breakpoints y, al ir minimal.css después, un valor
    suelto en :root ganaría en todos los anchos y descuadraría la
@@ -822,6 +979,14 @@ body.minimal {
   .m-feature:nth-child(3) { grid-column: span 1; }
   .m-steps { grid-template-columns: 1fr; }
   .m-hero__figure { aspect-ratio: 16 / 9; }
+  .m-gallery { grid-template-columns: repeat(2, 1fr); }
+
+  /* Los badges se meten dentro de la foto: con desplazamientos
+     negativos y poco ancho asomarían fuera y abrirían scroll lateral. */
+  .m-badge { padding: 0.7rem 0.95rem; }
+  .m-badge--a { left: 2%; }
+  .m-badge--b { top: 60%; left: 2%; }
+  .m-badge--c { display: none; }
 }
 
 @media (max-width: 768px) {
@@ -839,6 +1004,8 @@ body.minimal {
   .m-features { grid-template-columns: 1fr; }
   .m-list { grid-template-columns: 1fr; }
   .m-hero__figure { aspect-ratio: 4 / 3; }
+  .m-quote footer { gap: 0.7rem; }
+  .m-quote__avatar { width: 42px; height: 42px; font-size: 1rem; }
 
   /* Las cifras dejan de montarse sobre la foto: en vertical el solape
      come demasiada imagen. Bajan a una fila normal bajo ella. */
@@ -860,6 +1027,15 @@ body.minimal {
   .m-form .btn { width: 100%; }
 
   .m-trust { grid-template-columns: 1fr; gap: 0.75rem; }
+  .m-gallery { gap: 1rem 0.75rem; }
+  .m-feature__icon { width: 48px; height: 48px; font-size: 1.35rem; border-radius: 15px; }
+
+  /* En móvil solo sobrevive un badge: dos se pisan sobre una foto 4/3
+     y el conjunto pierde más de lo que aporta. */
+  .m-badge { padding: 0.6rem 0.85rem; gap: 0.5rem; }
+  .m-badge__num { font-size: 0.85rem; }
+  .m-badge__label { font-size: 0.72rem; }
+  .m-badge--b { display: none; }
   .m-saving { gap: 1.75rem; }
   .m-stores img { height: 38px; }
 }
