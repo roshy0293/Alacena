@@ -83,11 +83,30 @@
          la tipografía carga con el peso.
     ═══════════════════════════════════════════════ -->
     <section class="m-hero" id="hero">
+      <!-- Capa mágica. Ambas se sirven de lo que ya hay en el proyecto:
+           .aurora son las manchas a la deriva de styles.css y
+           .sparkle-layer la rellena main.js §7, que además se salta el
+           trabajo si el sistema pide movimiento reducido. Cero JS nuevo. -->
+      <div class="aurora m-hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="sparkle-layer" data-sparkles="34" aria-hidden="true"></div>
+
+      <!-- Chispas fijas de atrezo, a distinto tamaño y compás -->
+      <span class="m-mark m-mark--1" aria-hidden="true"></span>
+      <span class="m-mark m-mark--2" aria-hidden="true"></span>
+      <span class="m-mark m-mark--3" aria-hidden="true"></span>
+
       <div class="container m-hero__inner">
-        <p class="m-eyebrow reveal">Tu asistente de cocina inteligente</p>
+        <p class="m-hero__pill reveal">
+          <img src="assets/logos/Isotipo.svg" alt="" width="14" height="17" />
+          Tu asistente de cocina inteligente
+        </p>
 
         <h1 class="m-hero__title reveal">
-          ¿Qué tienes en la nevera?
+          ¿Qué tienes
+          <span class="m-hero__chip" aria-hidden="true">
+            <img src="assets/images/3 - Alacena Magica.png" alt="" width="1024" height="1024" />
+          </span>
+          en la nevera?
           <em>Veamos qué podemos crear.</em>
         </h1>
 
@@ -100,6 +119,13 @@
           <a href="#truco" class="btn btn--lg m-btn--solid">Pruébalo ahora →</a>
           <a href="#como-funciona" class="btn btn--lg m-btn--quiet">Ver cómo funciona</a>
         </div>
+
+        <!-- CTA circular al estilo de la referencia, en verde oscuro -->
+        <a class="m-orb" href="#cta-final">
+          <span class="m-orb__halo" aria-hidden="true"></span>
+          <span class="m-orb__ring" aria-hidden="true"></span>
+          <span class="m-orb__texto">Descubre<br />la magia</span>
+        </a>
       </div>
 
       <!-- La foto y los badges van juntos para que los segundos puedan

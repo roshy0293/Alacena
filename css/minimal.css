@@ -22,7 +22,8 @@
    8. Pie
    9. Ritmo de fondos
   10. Piezas de v3 (preloader, badges, iconos, galería, avatares)
-  11. Responsive
+  11. Hero mágico (atmósfera + CTA circular)
+  12. Responsive
    ════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════
@@ -955,7 +956,170 @@ body.minimal {
 }
 
 /* ═══════════════════════════════════
-  11. RESPONSIVE
+  11. HERO MÁGICO
+  Capa de atmósfera + CTA circular. Todo el movimiento se apoya en
+  piezas que ya existían: .aurora y @keyframes drift-* / twinkle de
+  styles.css, y los destellos que genera main.js §7. No hay JS nuevo,
+  y el bloque de prefers-reduced-motion de styles.css ya apaga
+  .sparkle-layer y la deriva de la aurora sin que haya que repetirlo.
+
+  El titular se queda en verde oscuro sólido a propósito: un degradado
+  animado sobre el texto (el .shimmer del original) lo dejaría por
+  debajo del contraste mínimo. El movimiento va en la decoración, no
+  bajo las palabras.
+═══════════════════════════════════ */
+.m-hero {
+  position: relative;
+  overflow: hidden;
+}
+/* El contenido por encima de la atmósfera: .aurora va a z-index 0 y
+   .sparkle-layer a 1, ambos desde styles.css. */
+.m-hero__inner,
+.m-hero__media,
+.m-hero > .container { position: relative; z-index: 2; }
+
+/* Aurora rebajada: los valores del original están calibrados para el
+   verde noche y sobre crema tiñen de más. */
+.m-hero__aurora span { opacity: 0.22; filter: blur(110px); }
+
+/* Los destellos de main.js nacen en amarillo, que sobre crema casi no
+   se ve. Se pasan a verde de marca; el script tiñe uno de cada cuatro
+   en terracota con estilo en línea, y ese sigue mandando. */
+.minimal .sparkle { color: var(--verde-marca); }
+
+/* ── Chispas fijas de atrezo ────────────────────────────────────
+   Misma silueta de cuatro puntas que las de styles.css, pero
+   colocadas a mano para acompañar al titular. */
+.m-mark {
+  position: absolute;
+  z-index: 1;
+  width: var(--t, 26px);
+  height: var(--t, 26px);
+  background: currentColor;
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+  pointer-events: none;
+  opacity: 0.75;
+}
+.m-mark--1 { --t: 30px; top: 18%;  left: 4%;   color: var(--amarillo); }
+.m-mark--2 { --t: 18px; top: 30%;  left: 9%;   color: var(--terracota); }
+.m-mark--3 { --t: 24px; top: 12%;  right: 12%; color: var(--verde-marca); }
+
+/* ── Pastilla del hero ──────────────────────────────────────────
+   Verde accesible (#2f7044) con texto blanco: 5.96:1. */
+.m-hero__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--r-chip);
+  background: var(--verde-texto);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--m-sombra-sm);
+}
+.m-hero__pill img { width: 0.95em; height: auto; }
+
+/* ── Foto incrustada en el titular ──────────────────────────────
+   Se dimensiona en em para que crezca con la tipografía fluida. */
+.m-hero__chip {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.55em;
+  height: 0.82em;
+  margin: 0 0.12em;
+  border-radius: 0.34em;
+  overflow: hidden;
+  box-shadow: var(--m-sombra-md);
+  transform: translateY(-0.06em);
+}
+/* La inclinación va en la imagen, no en el contenedor: la animación de
+   flotación escribe transform y se llevaría por delante el giro. */
+.m-hero__chip img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: rotate(-2deg) scale(1.06);
+}
+
+/* ── CTA circular ───────────────────────────────────────────────
+   Las tres capas se apilan por orden en el marcado, sin z-index
+   negativos: halo, aro y por último el disco con el texto. */
+.m-orb {
+  position: absolute;
+  right: -1.5rem;
+  bottom: 0.5rem;
+  width: 158px;
+  height: 158px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  z-index: 3;
+}
+.m-orb__halo {
+  position: absolute;
+  inset: -26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(69, 155, 91, 0.24), transparent 68%);
+}
+.m-orb__ring {
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+    var(--amarillo), var(--verde-marca), var(--terracota), var(--amarillo));
+}
+.m-orb__texto {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--verde-oscuro);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  text-align: center;
+  box-shadow: var(--m-sombra-md);
+}
+.m-orb:hover .m-orb__texto { background: var(--verde-texto); color: #fff; }
+
+@keyframes m-girar { to { transform: rotate(360deg); } }
+@keyframes m-latir {
+  0%, 100% { transform: scale(1);    opacity: 0.85; }
+  50%      { transform: scale(1.12); opacity: 0.45; }
+}
+@keyframes m-titilar {
+  0%, 100% { opacity: 0.25; transform: scale(0.85) rotate(0deg); }
+  50%      { opacity: 0.9;  transform: scale(1.1)  rotate(25deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .m-orb__ring { animation: m-girar 9s linear infinite; }
+  .m-orb__halo { animation: m-latir 3.6s var(--ease) infinite; }
+  .m-orb { transition: transform 0.3s var(--ease); }
+  .m-orb:hover { transform: scale(1.05); }
+
+  .m-mark   { animation: m-titilar 4.5s var(--ease) infinite; }
+  .m-mark--2 { animation-delay: 1.1s; }
+  .m-mark--3 { animation-delay: 2.2s; }
+
+  .m-hero__chip { animation: m-flotar 7s var(--ease) infinite; }
+}
+
+/* Sin movimiento: la chispa se queda quieta y visible, no invisible. */
+@media (prefers-reduced-motion: reduce) {
+  .m-mark { opacity: 0.55; }
+}
+
+/* ═══════════════════════════════════
+  12. RESPONSIVE
    La escalera de --nav-h se rehace entera: styles.css la redefine
    en sus propios breakpoints y, al ir minimal.css después, un valor
    suelto en :root ganaría en todos los anchos y descuadraría la
@@ -983,6 +1147,22 @@ body.minimal {
 
   /* Los badges se meten dentro de la foto: con desplazamientos
      negativos y poco ancho asomarían fuera y abrirían scroll lateral. */
+  /* El CTA circular deja de flotar a la derecha y entra en el flujo.
+     relative y NO static: el halo y el aro son absolutos con inset
+     negativo, y sin ancestro posicionado propio se anclarían a
+     .m-hero__inner y se estirarían a media pantalla. */
+  .m-orb {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 132px;
+    height: 132px;
+    margin-top: 2.5rem;
+  }
+  .m-mark--3 { display: none; }
+
+  .m-hero__chip { width: 1.3em; height: 0.7em; }
+
   .m-badge { padding: 0.7rem 0.95rem; }
   .m-badge--a { left: 2%; }
   .m-badge--b { top: 60%; left: 2%; }
@@ -1027,6 +1207,16 @@ body.minimal {
   .m-form .btn { width: 100%; }
 
   .m-trust { grid-template-columns: 1fr; gap: 0.75rem; }
+  .m-orb { width: 118px; height: 118px; }
+  .m-orb__texto { font-size: 0.92rem; }
+
+  /* La foto incrustada parte el titular en seco a estos anchos
+     ("¿Qué tienes / [foto] en / la nevera?"). Fuera: en móvil el
+     titular se defiende mejor solo. */
+  .m-hero__chip { display: none; }
+  .m-mark--1 { --t: 20px; }
+  .m-mark--2 { display: none; }
+  .m-hero__pill { font-size: 0.7rem; letter-spacing: 0.1em; }
   .m-gallery { gap: 1rem 0.75rem; }
   .m-feature__icon { width: 48px; height: 48px; font-size: 1.35rem; border-radius: 15px; }
 
