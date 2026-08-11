@@ -65,8 +65,8 @@
      de dar por buena una combinación:
 
        #1d381c + blanco ...... 12.85:1  ✓  (pie)
-       #e28538 + verde oscuro   4.68:1  ✓  (botón del CTA)
-       #fbeadb + naranja texto  4.89:1  ✓  (chip y fondo del CTA)
+       #e28538 + verde oscuro   4.68:1  ✓  (tarjeta del CTA)
+       #fbeadb + naranja texto  4.89:1  ✓  (chip de icono)
        #e6f2ea + verde texto    5.18:1  ✓  (chip y avatares)
        #459b5b + blanco ....... 3.45:1  ✗  nunca bajo texto pequeño
 
@@ -560,16 +560,63 @@ body.minimal {
 .m-quote footer { margin-top: 1.1rem; font-size: 0.9rem; color: var(--texto-suave); }
 .m-quote cite { font-style: normal; font-weight: 600; color: var(--gris-oscuro); }
 
-/* ── CTA final ── */
-.m-cta { background: var(--m-fondo-suave); text-align: center; }
-.m-cta__inner { display: flex; flex-direction: column; align-items: center; }
-.m-cta .m-lead { margin-inline: auto; }
+/* ── CTA final · tarjeta contenida ─────────────────────────────
+   El bloque deja de ser una banda a sangre y pasa a ser una tarjeta
+   naranja que flota sobre el fondo claro, con el móvil a un lado.
+
+   OJO con el texto: sobre #e28538 solo el verde oscuro SÓLIDO llega a
+   4.5:1 (4.68). Ni siquiera al 88% de opacidad (3.97), ni el blanco
+   (2.75), ni el naranja de texto (2.09). Aquí no se puede jerarquizar
+   aclarando el color: la diferencia entre titular y entradilla va por
+   tamaño y peso, y todo el texto queda en #1d381c a pelo. */
+.m-cta__card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  padding: clamp(2.25rem, 4.5vw, 4rem);
+  border-radius: clamp(28px, 4vw, 48px);
+  background: var(--terracota);
+  box-shadow: var(--m-sombra-lg);
+  overflow: hidden;
+}
+
+.m-cta__visual { display: grid; place-items: center; }
+.minimal .m-cta__visual .phone--mini {
+  width: 100%;
+  max-width: 220px;
+  transform: rotate(-6deg);
+  box-shadow: var(--m-sombra-lg);
+}
+/* Igual que en la galería: styles.css fija min-height:210px y a este
+   ancho saldría una caja, no un móvil. */
+.minimal .m-cta__visual .phone--mini .phone__screen {
+  min-height: 0;
+  aspect-ratio: 9 / 16;
+}
+
+.m-cta__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw + 0.85rem, 3.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  color: var(--verde-oscuro);
+  text-wrap: balance;
+}
+.m-cta__lead {
+  margin-top: 1.1rem;
+  font-size: clamp(1rem, 0.6vw + 0.88rem, 1.15rem);
+  line-height: 1.6;
+  color: var(--verde-oscuro);
+  max-width: 32rem;
+}
 
 .m-form {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2.5rem;
+  margin-top: 2.25rem;
   width: 100%;
   max-width: 34rem;
 }
@@ -727,7 +774,7 @@ body.minimal {
 #como-funciona { background: var(--verde-suave); }
 #proof    { background: var(--m-fondo-suave); }
 #galeria  { background: var(--blanco); }
-#cta-final { background: var(--terracota-suave); }
+#cta-final { background: var(--m-fondo-suave); }
 
 /* El <ul> vive dentro de .m-narrow (46rem) en el marcado, y tres
    tarjetas ahí dentro salen a ~245px con el texto partido en pedazos.
@@ -761,20 +808,17 @@ body.minimal {
 #truco .trick__result { margin-top: clamp(-4rem, -4vw, -1.5rem); }
 #truco .spell-card__media { border-radius: 0; }
 
-/* ── CTA final · naranja diluido ────────────────────────────── */
-/* El fondo pasa de #e28538 sólido a su versión suave. El naranja de
-   marca se queda en el botón, donde va con texto verde oscuro
-   (4.68:1); con blanco caería a 2.75:1. */
-#cta-final .m-title { color: var(--verde-oscuro); }
-#cta-final .m-lead,
-#cta-final .m-form__note { color: var(--terracota-texto); }
-#cta-final .m-form__input { border-color: rgba(160, 80, 26, 0.28); }
+/* ── CTA final ──────────────────────────────────────────────── */
+/* La sección se queda clara y el naranja se concentra en la tarjeta,
+   que se define en la sección 6. Aquí solo lo que depende del id. */
+#cta-final .m-form__note { color: var(--verde-oscuro); }
+#cta-final .m-form__input { border-color: transparent; }
 /* Los estados del campo y del aviso se repiten con el id delante: si no,
-   la regla de arriba (1,1,0) los pisa y el error deja de verse. */
-#cta-final .m-form__input.is-invalid { border-color: var(--terracota-texto); border-width: 2px; }
-#cta-final .m-form__note.is-success { color: var(--verde-texto); font-weight: 600; }
-#cta-final .m-btn--solid { background: var(--terracota); color: var(--verde-oscuro); }
-#cta-final .m-btn--solid:hover { background: #d4762c; color: var(--verde-oscuro); }
+   la regla de arriba (1,1,0) los pisa y el error deja de verse. Sobre
+   naranja el borde va en verde oscuro, no en el terracota de texto, que
+   ahí se queda en 2.09:1. */
+#cta-final .m-form__input.is-invalid { border-color: var(--verde-oscuro); border-width: 2px; }
+#cta-final .m-form__note.is-success { color: var(--verde-oscuro); font-weight: 700; }
 
 /* ═══════════════════════════════════
   10. PIEZAS DE v3
@@ -1129,6 +1173,14 @@ body.minimal {
   :root { --nav-h: 76px; --nav-h-scrolled: 66px; }
   .minimal .navbar__logo--color { height: 42px; }
   .minimal .navbar.is-scrolled .navbar__logo { height: 38px; }
+
+  /* La tarjeta del CTA se apila: el móvil arriba, el texto debajo. */
+  .m-cta__card { grid-template-columns: 1fr; text-align: center; }
+  .m-cta__lead { margin-inline: auto; }
+  .m-cta__body .m-form,
+  .m-cta__body .m-stores { margin-inline: auto; }
+  .m-cta__body .m-stores { justify-content: center; }
+  .minimal .m-cta__visual .phone--mini { max-width: 180px; }
 
   .m-trick__grid { grid-template-columns: 1fr; }
   .m-trick__grid .trick__result { max-width: 30rem; }

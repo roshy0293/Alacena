@@ -528,37 +528,59 @@
          8 · CTA FINAL
     ═══════════════════════════════════════════════ -->
     <section class="m-section m-cta" id="cta-final">
-      <div class="container m-narrow m-cta__inner">
-        <h2 class="m-title reveal">¿Listo para crear magia?</h2>
-        <p class="m-lead reveal">
-          Únete a la revolución de la cocina consciente. Sin complicaciones, sin desperdicio.
-        </p>
+      <div class="container">
+        <!-- Tarjeta naranja contenida, no banda a sangre: el bloque
+             flota sobre el fondo claro con el móvil asomando a un lado. -->
+        <div class="m-cta__card reveal">
+          <div class="m-cta__visual" aria-hidden="true">
+            <div class="phone phone--mini">
+              <div class="phone__screen">
+                <div class="mini mini--home">
+                  <div class="mini__bar"></div>
+                  <div class="mini__magic">✨ 12 recetas</div>
+                  <div class="mini__chips"><span></span><span></span><span></span></div>
+                  <div class="mini__card mini__card--sun"></div>
+                  <div class="mini__card mini__card--fresh"></div>
+                  <div class="mini__chips"><span></span><span></span></div>
+                  <div class="mini__card mini__card--warm"></div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <form class="m-form reveal" id="waitlistForm" novalidate>
-          <label class="sr-only" for="email">Tu correo electrónico</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="m-form__input"
-            placeholder="tu@email.com"
-            required
-            autocomplete="email"
-          />
-          <button type="submit" class="btn btn--lg m-btn--solid">Quiero probar Alacena Mágica →</button>
-        </form>
+          <div class="m-cta__body">
+            <h2 class="m-cta__title">¿Listo para crear magia?</h2>
+            <p class="m-cta__lead">
+              Únete a la revolución de la cocina consciente. Sin complicaciones, sin desperdicio.
+            </p>
 
-        <p class="m-form__note" id="formNote" role="status">
-          Disponible pronto. Sé de los primeros en saber cuándo lanzamos.
-        </p>
+            <form class="m-form" id="waitlistForm" novalidate>
+              <label class="sr-only" for="email">Tu correo electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="m-form__input"
+                placeholder="tu@email.com"
+                required
+                autocomplete="email"
+              />
+              <button type="submit" class="btn btn--lg m-btn--solid">Quiero probar Alacena Mágica →</button>
+            </form>
 
-        <div class="m-stores">
-          <a href="#" aria-label="Descargar en App Store (disponible próximamente)">
-            <img src="assets/images/app-store.png" alt="Descargar en App Store" width="140" height="44" loading="lazy" />
-          </a>
-          <a href="#" aria-label="Descargar en Google Play (disponible próximamente)">
-            <img src="assets/images/google-play.png" alt="Disponible en Google Play" width="140" height="44" loading="lazy" />
-          </a>
+            <p class="m-form__note" id="formNote" role="status">
+              Disponible pronto. Sé de los primeros en saber cuándo lanzamos.
+            </p>
+
+            <div class="m-stores">
+              <a href="#" aria-label="Descargar en App Store (disponible próximamente)">
+                <img src="assets/images/app-store.png" alt="Descargar en App Store" width="140" height="44" loading="lazy" />
+              </a>
+              <a href="#" aria-label="Descargar en Google Play (disponible próximamente)">
+                <img src="assets/images/google-play.png" alt="Disponible en Google Play" width="140" height="44" loading="lazy" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
