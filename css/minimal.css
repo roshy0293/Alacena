@@ -58,6 +58,14 @@
   --m-sombra-lg: 0 8px 20px rgba(29, 56, 28, 0.08),
                  0 34px 80px rgba(29, 56, 28, 0.16);
 
+  /* ── Tiempos de interacción ────────────────────────────────────
+     Cortos a propósito: una microinteracción que pasa de ~200ms deja
+     de leerse como respuesta y empieza a leerse como espera. El
+     hundido al pulsar va aún más rápido, porque acompaña al dedo. */
+  --m-t-pulsar: 110ms;
+  --m-t-hover:  170ms;
+  --m-ease-salida: cubic-bezier(0.32, 0.72, 0, 1);
+
   /* ── Color y contraste ─────────────────────────────────────────
      v3 no pinta secciones de color: los fondos son claros y el color
      va a botones, badges, chips y bordes. Queda una sola pieza
@@ -81,6 +89,22 @@ body.minimal {
   background: var(--blanco);
   color: var(--gris-oscuro);
 }
+
+/* ── Foco visible ───────────────────────────────────────────────
+   styles.css pone el contorno global en terracota, calibrado para el
+   verde noche del original. En esta página, que es clara de arriba
+   abajo, no se ve: 2.75:1 sobre blanco, 2.59 sobre crema, 2.39 sobre
+   el verde de los pasos y 1.00 sobre la tarjeta naranja del CTA, donde
+   contorno y fondo son el mismo color. WCAG 1.4.11 pide 3:1.
+
+   Se pasa a verde oscuro, que cumple en todas las superficies claras
+   (12.10 sobre crema, 4.68 sobre la tarjeta naranja), y se invierte a
+   blanco en el pie, que es la única pieza oscura. */
+.minimal :focus-visible {
+  outline: 3px solid var(--verde-oscuro);
+  outline-offset: 3px;
+}
+.minimal .m-footer :focus-visible { outline-color: var(--blanco); }
 
 /* ═══════════════════════════════════
    2. DECORACIÓN QUE SE APAGA
@@ -108,7 +132,7 @@ body.minimal {
   .js .reveal {
     transform: translateY(26px);
     filter: none;
-    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    transition: opacity 0.5s var(--m-ease-salida), transform 0.5s var(--m-ease-salida);
   }
   .js .reveal.is-visible { transform: none; }
 
@@ -257,7 +281,7 @@ body.minimal {
   border-radius: var(--r-pill);
   box-shadow: none;
 }
-.m-btn--solid:hover { background: var(--verde-texto); color: #fff; transform: none; }
+.m-btn--solid:hover { background: var(--verde-texto); color: #fff; }
 
 .m-btn--quiet {
   background: transparent;
@@ -265,7 +289,7 @@ body.minimal {
   box-shadow: inset 0 0 0 1px var(--m-linea);
   border-radius: var(--r-pill);
 }
-.m-btn--quiet:hover { box-shadow: inset 0 0 0 1px var(--verde-marca); color: var(--verde-texto); transform: none; }
+.m-btn--quiet:hover { box-shadow: inset 0 0 0 1px var(--verde-marca); color: var(--verde-texto); }
 
 /* La imagen se contiene al ancho del container en lugar de ir a
    sangre: con esquinas de 36px, un borde pegado al viewport se lee
@@ -633,7 +657,13 @@ body.minimal {
   transition: border-color var(--t-fast);
 }
 .m-form__input::placeholder { color: #9c988f; }
-.m-form__input:focus { outline: none; border-color: var(--verde-marca); }
+/* Anillo además del borde: sobre la tarjeta naranja el borde solo se
+   confunde con el propio contorno del campo. */
+.m-form__input:focus-visible {
+  outline: none;
+  border-color: var(--verde-oscuro);
+  box-shadow: 0 0 0 3px rgba(29, 56, 28, 0.22);
+}
 .m-form__input.is-invalid { border-color: var(--terracota-texto); }
 
 .m-form__note { margin-top: 1.25rem; font-size: 0.92rem; color: var(--texto-suave); }
@@ -670,7 +700,7 @@ body.minimal {
   transition: transform var(--t-fast), box-shadow var(--t-fast),
               background var(--t-fast), border-color var(--t-fast);
 }
-.minimal .pantry-picker__btn:hover { transform: none; border-color: var(--verde-marca); }
+.minimal .pantry-picker__btn:hover { border-color: var(--verde-marca); }
 .minimal .pantry-picker__btn[aria-pressed="true"] {
   background: var(--verde-oscuro);
   border-color: var(--verde-oscuro);
@@ -813,6 +843,13 @@ body.minimal {
    que se define en la sección 6. Aquí solo lo que depende del id. */
 #cta-final .m-form__note { color: var(--verde-oscuro); }
 #cta-final .m-form__input { border-color: transparent; }
+/* El foco tiene que repetirse con el id: la regla de arriba (1,1,0) le
+   ganaba a .m-form__input:focus (0,2,0) y el campo del CTA no daba
+   NINGUNA señal al enfocarlo con teclado. */
+#cta-final .m-form__input:focus-visible {
+  border-color: var(--verde-oscuro);
+  box-shadow: 0 0 0 3px rgba(29, 56, 28, 0.28);
+}
 /* Los estados del campo y del aviso se repiten con el id delante: si no,
    la regla de arriba (1,1,0) los pisa y el error deja de verse. Sobre
    naranja el borde va en verde oscuro, no en el terracota de texto, que
@@ -974,29 +1011,78 @@ body.minimal {
 /* ── Hover con escala ───────────────────────────────────────────
    Solo con puntero fino: en táctil el :hover se queda pegado tras
    tocar. Y solo sin movimiento reducido. */
-@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+@media (prefers-reduced-motion: no-preference) {
+  /* ── Tarjetas ──────────────────────────────────────────────────
+     Las tarjetas grandes suben, no se escalan. Un scale(1.02) sobre
+     una tarjeta de 500px mueve sus bordes 5px hacia fuera y, mientras
+     dura la transición, el texto se rasteriza a un tamaño intermedio y
+     se ve borroso. Un translateY no toca el tamaño del texto.
+     La escala se reserva para piezas pequeñas, donde no hay párrafos
+     que emborronar. */
   .m-trust li,
   .m-list li,
   .m-feature,
   .m-quote,
   .m-gallery__item .phone--mini,
   .m-feature__icon,
-  .minimal .pantry-picker__btn {
-    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease),
-                background var(--t-fast), border-color var(--t-fast);
+  .minimal .pantry-picker__btn,
+  .minimal .btn,
+  .m-orb {
+    transition: transform var(--m-t-hover) var(--m-ease-salida),
+                box-shadow var(--m-t-hover) var(--m-ease-salida),
+                background var(--m-t-hover) var(--m-ease-salida),
+                border-color var(--m-t-hover) var(--m-ease-salida),
+                color var(--m-t-hover) var(--m-ease-salida);
   }
-  .m-trust li:hover,
-  .m-list li:hover,
-  .m-feature:hover,
-  .m-quote:hover {
-    transform: scale(1.02);
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  /* Con .minimal delante a propósito. Estas tarjetas llevan también la
+     clase .reveal, y `.js .reveal.is-visible { transform: none }` tiene
+     especificidad (0,3,0): sin el prefijo, el hover se quedaba en
+     (0,2,0) y no llegaba a aplicarse nunca. */
+  .minimal .m-trust li:hover,
+  .minimal .m-list li:hover,
+  .minimal .m-feature:hover,
+  .minimal .m-quote:hover {
+    transform: translateY(-4px);
     box-shadow: var(--m-sombra-lg);
   }
   .m-gallery__item:hover .phone--mini { transform: scale(1.03); }
   .m-feature:hover .m-feature__icon  { transform: scale(1.06); }
+
   /* Gana a la regla de la sección 7, que anula el desplazamiento del
      chip; aquí sí queremos gesto, pero en escala. */
   .minimal .pantry-picker__btn:hover { transform: scale(1.04); }
+
+  /* Los botones se levantan un pelo: antes tenían transform:none y el
+     puntero no obtenía ninguna respuesta de movimiento. */
+  .minimal .m-btn--solid:hover,
+  .minimal .m-btn--quiet:hover { transform: translateY(-2px); }
+}
+
+/* ── Hundido al pulsar ──────────────────────────────────────────
+   Un solo bloque para todos, y colocado DESPUÉS del de hover a
+   propósito: mientras el dedo o el puntero está encima, ambos estados
+   coinciden y con la misma especificidad manda el último. Antes había
+   dos grupos repartidos y el chip de ingrediente y la tarjeta de
+   problema se quedaban con el hover al pulsarlas.
+
+   Va fuera de (hover: hover) porque en táctil no hay hover pero la
+   pulsación sí existe, y es justo donde más se agradece la respuesta. */
+@media (prefers-reduced-motion: no-preference) {
+  .minimal .btn:active,
+  .minimal .m-btn--solid:active,
+  .minimal .m-btn--quiet:active,
+  .minimal .pantry-picker__btn:active,
+  .minimal .m-orb:active,
+  .minimal .m-trust li:active,
+  .minimal .m-list li:active,
+  .minimal .m-feature:active,
+  .minimal .m-quote:active {
+    transform: scale(0.975);
+    transition-duration: var(--m-t-pulsar);
+  }
 }
 
 /* ═══════════════════════════════════
@@ -1147,7 +1233,6 @@ body.minimal {
 @media (prefers-reduced-motion: no-preference) {
   .m-orb__ring { animation: m-girar 9s linear infinite; }
   .m-orb__halo { animation: m-latir 3.6s var(--ease) infinite; }
-  .m-orb { transition: transform 0.3s var(--ease); }
   .m-orb:hover { transform: scale(1.05); }
 
   .m-mark   { animation: m-titilar 4.5s var(--ease) infinite; }
