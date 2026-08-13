@@ -32,7 +32,27 @@
        propósito: si un script fallara, la página quedaría tapada.
        aria-hidden porque no aporta nada a quien no lo ve. -->
   <div class="m-preloader" aria-hidden="true">
-    <img src="assets/logos/Isotipo.svg" alt="" width="64" height="79" />
+    <div class="m-preloader__escena">
+      <span class="m-preloader__aro m-preloader__aro--1"></span>
+      <span class="m-preloader__aro m-preloader__aro--2"></span>
+      <span class="m-preloader__aro m-preloader__aro--3"></span>
+
+      <span class="m-preloader__resplandor"></span>
+
+      <!-- Chispas en órbita: cada una es un radio que gira, con la
+           chispa colgada del extremo. Así la órbita es del contenedor y
+           el titileo de la chispa, sin pelearse por el mismo transform. -->
+      <span class="m-preloader__orbita m-preloader__orbita--1"><i></i></span>
+      <span class="m-preloader__orbita m-preloader__orbita--2"><i></i></span>
+      <span class="m-preloader__orbita m-preloader__orbita--3"><i></i></span>
+      <span class="m-preloader__orbita m-preloader__orbita--4"><i></i></span>
+      <span class="m-preloader__orbita m-preloader__orbita--5"><i></i></span>
+
+      <img src="assets/logos/Isotipo.svg" alt="" width="64" height="79" />
+    </div>
+
+    <p class="m-preloader__texto">Preparando la magia</p>
+    <span class="m-preloader__barra"><i></i></span>
   </div>
 
   <a class="skip-link" href="#main">Saltar al contenido principal</a>

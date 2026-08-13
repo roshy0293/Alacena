@@ -873,29 +873,168 @@ body.minimal {
   z-index: 5000;
   display: grid;
   place-items: center;
+  align-content: center;
+  gap: 2.25rem;
   background: var(--m-fondo-suave);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-.m-preloader img { width: 64px; height: auto; }
 
+/* La escena es el marco de referencia de todo lo que orbita. */
+.m-preloader__escena {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 190px;
+  height: 190px;
+}
+.m-preloader img {
+  position: relative;
+  z-index: 3;
+  width: 64px;
+  height: auto;
+}
+
+/* ── Aros ───────────────────────────────────────────────────────
+   Tres circunferencias a distinto tamano, velocidad y sentido. Cada
+   una pinta solo dos lados del borde, que es lo que convierte el giro
+   en un arco visible en vez de un circulo estatico. */
+.m-preloader__aro {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+.m-preloader__aro--1 {
+  width: 110px; height: 110px;
+  border-top-color: var(--verde-marca);
+  border-right-color: var(--verde-marca);
+}
+.m-preloader__aro--2 {
+  width: 148px; height: 148px;
+  border-bottom-color: var(--terracota);
+  border-left-color: var(--terracota);
+}
+.m-preloader__aro--3 {
+  width: 186px; height: 186px;
+  border-top-color: var(--amarillo);
+  border-bottom-color: var(--amarillo);
+  opacity: 0.75;
+}
+
+/* Halo calido detras del isotipo */
+.m-preloader__resplandor {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(234, 204, 52, 0.38), rgba(226, 133, 56, 0.12) 55%, transparent 72%);
+}
+
+/* ── Chispas en orbita ──────────────────────────────────────────
+   El <span> es el radio que rota; la <i> del extremo es la chispa, con
+   la misma silueta de cuatro puntas que usa el resto del sitio. Se
+   separan en dos elementos a proposito: si la orbita y el titileo
+   compartieran transform, uno se comeria al otro. */
+.m-preloader__orbita {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: start center;
+}
+.m-preloader__orbita i {
+  width: 13px;
+  height: 13px;
+  background: var(--amarillo);
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+}
+/* El reparto en el circulo NO se hace con un rotate estatico: la
+   animacion escribe transform y se lo llevaria por delante, dejando las
+   cinco chispas saliendo del mismo punto. Se hace con retardo negativo,
+   que arranca cada orbita ya empezada en una fraccion distinta de su
+   propio ciclo. */
+.m-preloader__orbita--2 i { background: var(--terracota); width: 10px; height: 10px; }
+.m-preloader__orbita--4 i { background: var(--verde-marca); width: 11px; height: 11px; }
+
+/* ── Texto y barra ──────────────────────────────────────────────
+   El texto en verde oscuro sobre crema da 12.10:1; la barra es
+   decorativa y no carga informacion. */
+.m-preloader__texto {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--verde-oscuro);
+}
+.m-preloader__barra {
+  position: relative;
+  width: 190px;
+  height: 3px;
+  border-radius: var(--r-chip);
+  background: rgba(29, 56, 28, 0.1);
+  overflow: hidden;
+}
+.m-preloader__barra i {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--verde-marca), var(--amarillo), var(--terracota));
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* ── Puesta en marcha ───────────────────────────────────────────
+   Todo dentro de no-preference y bajo .js: por defecto el preloader no
+   existe, asi que si alguien pide movimiento reducido o el JS no llega
+   a cargar, nadie se queda mirando una pantalla tapada. */
 @media (prefers-reduced-motion: no-preference) {
   .js .m-preloader {
     opacity: 1;
     visibility: visible;
-    animation: m-preloader-salida 1.25s var(--ease) forwards;
+    animation: m-preloader-salida 1.9s var(--ease) forwards;
   }
-  .js .m-preloader img { animation: m-preloader-logo 0.45s var(--ease) both; }
+  .js .m-preloader img { animation: m-preloader-logo 0.5s var(--ease-back) both; }
+
+  .js .m-preloader__aro--1 { animation: m-girar 2.6s linear infinite; }
+  .js .m-preloader__aro--2 { animation: m-girar 3.6s linear infinite reverse; }
+  .js .m-preloader__aro--3 { animation: m-girar 5s linear infinite; }
+
+  .js .m-preloader__resplandor { animation: m-latir 2.2s var(--ease) infinite; }
+
+  .js .m-preloader__orbita { animation: m-orbitar 4.5s linear infinite; }
+  .js .m-preloader__orbita--1 { animation-delay: 0s; }
+  .js .m-preloader__orbita--2 { animation-duration: 5.2s; animation-delay: -1.04s; }
+  .js .m-preloader__orbita--3 { animation-duration: 3.9s; animation-delay: -1.56s; }
+  .js .m-preloader__orbita--4 { animation-duration: 5.8s; animation-delay: -3.48s; }
+  .js .m-preloader__orbita--5 { animation-duration: 4.2s; animation-delay: -3.36s; }
+  .js .m-preloader__orbita i { animation: m-titilar 1.6s var(--ease) infinite; }
+  .js .m-preloader__orbita--2 i { animation-delay: 0.4s; }
+  .js .m-preloader__orbita--3 i { animation-delay: 0.8s; }
+  .js .m-preloader__orbita--4 i { animation-delay: 1.1s; }
+  .js .m-preloader__orbita--5 i { animation-delay: 1.4s; }
+
+  .js .m-preloader__texto { animation: m-preloader-logo 0.5s var(--ease) 0.15s both; }
+  /* Lineal y no --ease: esa curva es un ease-out muy agresivo y la barra
+     llegaba al 98% en 400ms para luego arrastrarse, que se lee como
+     atasco en vez de progreso. La duracion se ajusta a cuando el
+     preloader empieza a irse (74% de 1.9s = 1.4s). */
+  .js .m-preloader__barra i { animation: m-llenar 1.4s linear forwards; }
 }
 
 @keyframes m-preloader-salida {
-  0%, 72%  { opacity: 1; visibility: visible; }
+  0%, 74%  { opacity: 1; visibility: visible; }
   100%     { opacity: 0; visibility: hidden; }
 }
 @keyframes m-preloader-logo {
-  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+  from { opacity: 0; transform: translateY(12px) scale(0.9); }
   to   { opacity: 1; transform: none; }
+}
+/* Nombre propio y no una reutilizacion de m-girar: cada radio parte de
+   su propio angulo, y el keyframe tiene que sumarse a ese giro. */
+@keyframes m-orbitar { to { transform: rotate(360deg); } }
+@keyframes m-llenar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 /* ── Badges del hero · vidrio ───────────────────────────────────
