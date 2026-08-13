@@ -78,55 +78,89 @@
   <main id="main">
 
     <!-- ══════════════════════════════════════════════
-         1 · HERO
-         Sin aurora, sin destellos, sin tarjetas flotando:
-         la tipografía carga con el peso.
+         1 · HERO - Versión Mágica Mejorada
+         Con efectos de partículas, glow, y animaciones fluidas
     ═══════════════════════════════════════════════ -->
-    <section class="m-hero" id="hero">
-      <!-- Capa mágica. Ambas se sirven de lo que ya hay en el proyecto:
-           .aurora son las manchas a la deriva de styles.css y
-           .sparkle-layer la rellena main.js §7, que además se salta el
-           trabajo si el sistema pide movimiento reducido. Cero JS nuevo. -->
+    <section class="m-hero m-hero--enhanced" id="hero">
+      <!-- Fondo dinámico con gradientes animados -->
+      <div class="m-hero__gradient-bg" aria-hidden="true"></div>
+      
+      <!-- Capa de partículas mágicas -->
+      <div class="m-hero__particles" id="magic-particles" aria-hidden="true"></div>
+      
+      <!-- Aurora boreal suave -->
       <div class="aurora m-hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="sparkle-layer" data-sparkles="34" aria-hidden="true"></div>
+      
+      <!-- Destellos brillantes -->
+      <div class="sparkle-layer" data-sparkles="50" aria-hidden="true"></div>
 
-      <!-- Chispas fijas de atrezo, a distinto tamaño y compás -->
-      <span class="m-mark m-mark--1" aria-hidden="true"></span>
-      <span class="m-mark m-mark--2" aria-hidden="true"></span>
-      <span class="m-mark m-mark--3" aria-hidden="true"></span>
+      <!-- Elementos flotantes decorativos -->
+      <div class="m-hero__floating-elements" aria-hidden="true">
+        <span class="m-float-item m-float-item--1">✨</span>
+        <span class="m-float-item m-float-item--2">🌿</span>
+        <span class="m-float-item m-float-item--3">⭐</span>
+        <span class="m-float-item m-float-item--4">🍋</span>
+        <span class="m-float-item m-float-item--5">💫</span>
+      </div>
 
       <div class="container m-hero__inner">
-        <p class="m-hero__pill reveal">
-          <img src="assets/logos/Isotipo.svg" alt="" width="14" height="17" />
-          Tu asistente de cocina inteligente
-        </p>
-
-        <h1 class="m-hero__title reveal">
-          ¿Qué tienes
-          <span class="m-hero__chip" aria-hidden="true">
-            <img src="assets/images/3 - Alacena Magica.png" alt="" width="1024" height="1024" />
-          </span>
-          en la nevera?
-          <em>Veamos qué podemos crear.</em>
-        </h1>
-
-        <p class="m-hero__sub reveal reveal--delay">
-          Transforma los ingredientes que ya tienes en recetas deliciosas.
-          Sin desperdicio, sin complicaciones, pura magia culinaria.
-        </p>
-
-        <div class="m-hero__actions reveal reveal--delay-2">
-          <a href="#truco" class="btn btn--lg m-btn--solid">Pruébalo ahora →</a>
-          <a href="#como-funciona" class="btn btn--lg m-btn--quiet">Ver cómo funciona</a>
+        <!-- Badge superior con glow -->
+        <div class="m-hero__badge reveal-up">
+          <img src="assets/logos/Isotipo.svg" alt="" width="16" height="20" class="m-hero__badge-icon" />
+          <span>Magia culinaria al instante</span>
+          <span class="m-hero__badge-glow" aria-hidden="true"></span>
         </div>
 
-        <!-- CTA circular al estilo de la referencia, en verde oscuro -->
-        <a class="m-orb" href="#cta-final">
-          <span class="m-orb__halo" aria-hidden="true"></span>
-          <span class="m-orb__ring" aria-hidden="true"></span>
-          <span class="m-orb__texto">Descubre<br />la magia</span>
-        </a>
+        <!-- Título principal con efecto de texto revelado -->
+        <h1 class="m-hero__title reveal-up reveal-up--delay-1">
+          <span class="m-hero__title-line">¿Qué tienes</span>
+          <span class="m-hero__title-highlight">
+            en la nevera?
+            <svg class="m-hero__sparkle-svg" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="45" class="m-hero__sparkle-ring"/>
+            </svg>
+          </span>
+          <em class="m-hero__title-emphasis">Veamos qué magia<br/>podemos crear.</em>
+        </h1>
+
+        <!-- Subtítulo con gradiente de texto -->
+        <p class="m-hero__sub reveal-up reveal-up--delay-2">
+          <span class="m-hero__sub-text">
+            Transforma ingredientes ordinarios en recetas extraordinarias.
+            <strong class="m-hero__sub-strong">Sin desperdicio. Sin límites. Pura creatividad.</strong>
+          </span>
+        </p>
+
+        <!-- Botones con efectos hover avanzados -->
+        <div class="m-hero__actions reveal-up reveal-up--delay-3">
+          <a href="#truco" class="btn btn--lg m-btn--magic">
+            <span class="m-btn__content">
+              <span class="m-btn__text">Pruébalo ahora</span>
+              <span class="m-btn__arrow" aria-hidden="true">→</span>
+            </span>
+            <span class="m-btn__glow" aria-hidden="true"></span>
+            <span class="m-btn__particles" aria-hidden="true"></span>
+          </a>
+          
+          <a href="#como-funciona" class="btn btn--lg m-btn--glass">
+            <span class="m-btn__content">
+              <span class="m-btn__text">Ver cómo funciona</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Indicador de scroll animado -->
+        <div class="m-hero__scroll-indicator reveal-up reveal-up--delay-4" aria-hidden="true">
+          <div class="m-scroll-mouse">
+            <div class="m-scroll-wheel"></div>
+          </div>
+          <span class="m-scroll-text">Descubre la receta perfecta</span>
+        </div>
       </div>
+
+      <!-- Overlay de viñeta mágica -->
+      <div class="m-hero__vignette" aria-hidden="true"></div>
+    </section>
 
       <!-- La foto y los badges van juntos para que los segundos puedan
            posicionarse contra ella. Mismo contenido que los float-card
