@@ -1332,3 +1332,39 @@ ul, ol { list-style: none; }
   .marquee__track { animation: none; transform: none; }
   .aurora span { animation: none; }
 }
+
+/* ═══════════════════════════════════
+   10. PRELOADER
+   Solo aparece si hay JS y no hay reduced motion.
+   Animación CSS que lo retira automáticamente.
+═══════════════════════════════════ */
+.m-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: grid;
+  place-items: center;
+  background: var(--noche);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.m-preloader img { width: 80px; height: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .m-preloader {
+    opacity: 1;
+    visibility: visible;
+    animation: preloader-salida 1.25s var(--ease) forwards;
+  }
+  .js .m-preloader img { animation: preloader-logo 0.45s var(--ease) both; }
+}
+
+@keyframes preloader-salida {
+  0%, 72%  { opacity: 1; visibility: visible; }
+  100%     { opacity: 0; visibility: hidden; }
+}
+@keyframes preloader-logo {
+  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
