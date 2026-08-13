@@ -109,18 +109,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── 5. REVEAL ON-SCROLL ───────────────────────── */
   (function revealOnScroll() {
-    const items = document.querySelectorAll('.reveal');
+    // Soporta tanto .reveal (clásico) como .reveal-up (nuevo para hero mágico)
+    const items = document.querySelectorAll('.reveal, .reveal-up');
     if (!items.length) return;
 
     if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
-      items.forEach((el) => el.classList.add('is-visible'));
+      items.forEach((el) => el.classList.add('active', 'is-visible'));
       return;
     }
 
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
+        entry.target.classList.add('active', 'is-visible');
         obs.unobserve(entry.target);
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });

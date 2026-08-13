@@ -1,1 +1,1 @@
-Nothing needs to be added to .gitignore since only a source file (`dashboard.html`) was added without any build artifacts, dependencies, or temporary files.
+(css/minimal.css, js/main.js, minimal.html are source files, no build artifacts, dependencies, or temp files detected)
