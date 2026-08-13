@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alacena Mágica | Dashboard de Presentación</title>
+  
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;600;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- VARIABLES & RESET --- */
+    :root {
+      --verde-marca: #459b5b;
+      --verde-oscuro: #1d381c;
+      --terracota: #e28538;
+      --amarillo: #eacc34;
+      --crema: #f5f1e8;
+      --noche: #0c1c0d;
+      --blanco: #ffffff;
+      --gris-claro: #e5e5e5;
+      
+      --font-display: 'Fraunces', serif;
+      --font-ui: 'Outfit', sans-serif;
+      
+      --shadow-sm: 0 2px 8px rgba(12, 28, 13, 0.08);
+      --shadow-md: 0 8px 24px rgba(12, 28, 13, 0.12);
+      --shadow-lg: 0 16px 48px rgba(12, 28, 13, 0.15);
+      --radius: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-ui);
+      background-color: var(--crema);
+      color: var(--noche);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { text-decoration: none; color: inherit; transition: 0.3s ease; }
+    ul { list-style: none; }
+
+    /* --- HEADER --- */
+    .dash-header {
+      background-color: var(--noche);
+      color: var(--crema);
+      padding: 2rem 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dash-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(69, 155, 91, 0.2) 0%, transparent 70%);
+      animation: pulse 10s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .dash-logo {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--amarillo);
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .dash-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- MAIN CONTAINER --- */
+    .dash-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .dash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    /* --- CARDS --- */
+    .card {
+      background: var(--blanco);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.27), box-shadow 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--terracota);
+      color: var(--blanco);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    .card-badge.minimal {
+      background: var(--verde-marca);
+    }
+
+    .card-image {
+      height: 220px;
+      background-color: var(--gris-claro);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Simulación visual de cada versión */
+    .img-original {
+      background: linear-gradient(135deg, var(--noche) 0%, var(--verde-oscuro) 100%);
+    }
+    .img-original::after {
+      content: '✨';
+      font-size: 4rem;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+    }
+
+    .img-minimal {
+      background: linear-gradient(135deg, var(--crema) 0%, #fff 100%);
+      border-bottom: 1px solid var(--gris-claro);
+    }
+    .img-minimal::after {
+      content: '⚡';
+      font-size: 4rem;
+      color: var(--verde-marca);
+    }
+
+    .card-content {
+      padding: 2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      color: var(--verde-oscuro);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 2rem;
+      flex: 1;
+    }
+
+    .card-features {
+      margin-bottom: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gris-claro);
+    }
+
+    .card-features li {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--noche);
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: var(--verde-marca);
+      font-weight: bold;
+    }
+
+    .btn-dash {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      text-align: center;
+      background-color: var(--noche);
+      color: var(--blanco);
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-dash:hover {
+      background-color: var(--verde-marca);
+      transform: translateY(-2px);
+    }
+
+    .btn-dash.outline {
+      background-color: transparent;
+      border: 2px solid var(--noche);
+      color: var(--noche);
+      margin-top: 1rem;
+    }
+
+    .btn-dash.outline:hover {
+      background-color: var(--noche);
+      color: var(--blanco);
+    }
+
+    /* --- FOOTER LINKS --- */
+    .dash-footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--blanco);
+      border-top: 1px solid var(--gris-claro);
+      margin-top: auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .footer-links a:hover {
+      color: var(--terracota);
+      text-decoration: underline;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .dash-header { padding: 1.5rem 1rem; }
+      .dash-logo { font-size: 2rem; }
+      .dash-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .card-image { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="dash-header">
+    <h1 class="dash-logo">Alacena Mágica</h1>
+    <p class="dash-subtitle">Panel de demostración para el cliente. Explora las dos experiencias de usuario disponibles.</p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dash-container">
+    
+    <div class="dash-grid">
+      
+      <!-- Card 1: Versión Original -->
+      <article class="card">
+        <span class="card-badge">Experiencia Completa</span>
+        <div class="card-image img-original"></div>
+        <div class="card-content">
+          <h2 class="card-title">Landing Principal</h2>
+          <p class="card-desc">
+            La experiencia inmersiva completa. Diseñada para cautivar al usuario con narrativa visual, animaciones suaves y todos los detalles de la marca. Ideal para primera visita y storytelling.
+          </p>
+          <ul class="card-features">
+            <li>Animaciones Parallax & Reveal</li>
+            <li>Demo interactiva completa</li>
+            <li>Narrativa visual rica</li>
+            <li>Efectos de destello y magia</li>
+          </ul>
+          <a href="index.html" class="btn-dash">Ver Versión Original →</a>
+        </div>
+      </article>
+
+      <!-- Card 2: Versión Minimalista -->
+      <article class="card">
+        <span class="card-badge minimal">Rendimiento</span>
+        <div class="card-image img-minimal"></div>
+        <div class="card-content">
+          <h2 class="card-title">Versión Minimal</h2>
+          <p class="card-desc">
+            Enfocada en la velocidad y la conversión directa. Elimina distracciones visuales para usuarios que buscan rapidez o tienen conexiones lentas. Carga instantánea.
+          </p>
+          <ul class="card-features">
+            <li>Carga ultrarrápida</li>
+            <li>Sin distracciones visuales</li>
+            <li>Acceso directo al formulario</li>
+            <li>Preloader optimizado</li>
+          </ul>
+          <a href="minimal.html" class="btn-dash">Ver Versión Minimal →</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Additional Links Section (Optional) -->
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem auto;">
+      <h3 style="font-family: var(--font-display); color: var(--verde-oscuro); margin-bottom: 1rem;">¿Necesitas revisar los aspectos legales?</h3>
+      <p style="margin-bottom: 1.5rem; color: #666;">Accede a la documentación legal y formularios de soporte directamente desde aquí.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="privacy.html" class="btn-dash outline" style="width: auto; padding: 0.75rem 1.5rem;">Privacidad</a>
+        <a href="terms.html" class="btn-dash outline" style="width: auto; padding: 0.75rem 1.5rem;">Términos</a>
+        <a href="support.html" class="btn-dash outline" style="width: auto; padding: 0.75rem 1.5rem;">Soporte</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="dash-footer">
+    <div class="footer-links">
+      <span>© 2024 Alacena Mágica</span>
+      <a href="mailto:franciscorueda2602@gmail.com">Contacto</a>
+      <a href="unsubscribe.html">Darse de baja</a>
+    </div>
+  </footer>
+
+</body>
+</html>
