@@ -1,0 +1,633 @@
+/* ============================================
+   ALACENA MÁGICA - Minimal CSS
+   Versión simplificada y ligera
+   ============================================ */
+
+/* Reset básico */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables */
+:root {
+  --color-primary: #7CB342;
+  --color-primary-dark: #558B2F;
+  --color-text: #2C3E50;
+  --color-text-light: #7F8C8D;
+  --color-background: #FFFFFF;
+  --color-background-alt: #F9FAFB;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
+  --max-width: 800px;
+  --border-radius: 8px;
+}
+
+/* Tipografía base */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Contenedor principal */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Header minimal */
+.header-minimal {
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid #EEE;
+}
+
+.header-minimal .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-minimal {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* Hero section minimal */
+.hero-minimal {
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+  background-color: var(--color-background-alt);
+}
+
+.hero-minimal h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.hero-minimal p {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-lg);
+}
+
+/* Botones */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Features section */
+.features-minimal {
+  padding: var(--spacing-xl) 0;
+}
+
+.features-minimal h2 {
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.feature-card {
+  padding: var(--spacing-lg);
+  background-color: var(--color-background-alt);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+.feature-card p {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+/* CTA section */
+.cta-minimal {
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.cta-minimal h2 {
+  font-size: 1.75rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.cta-minimal p {
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.9;
+}
+
+.cta-minimal .btn {
+  background-color: white;
+  color: var(--color-primary);
+}
+
+.cta-minimal .btn:hover {
+  background-color: var(--color-background-alt);
+}
+
+/* Footer minimal */
+.footer-minimal {
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid #EEE;
+  text-align: center;
+}
+
+.footer-minimal p {
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+}
+
+.footer-links {
+  margin-top: var(--spacing-md);
+}
+
+.footer-links a {
+  color: var(--color-text-light);
+  text-decoration: none;
+  margin: 0 var(--spacing-sm);
+  font-size: 0.875rem;
+}
+
+.footer-links a:hover {
+  color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root {
+    --spacing-xl: 3rem;
+  }
+  
+  .hero-minimal h1 {
+    font-size: 1.75rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-minimal .container {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   PRELOADER MÁGICO
+   ============================================ */
+
+.magic-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+  overflow: hidden;
+}
+
+.magic-preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  text-align: center;
+  position: relative;
+}
+
+/* Contenedor de la órbita mágica */
+.magic-orb-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 2rem;
+}
+
+/* Orbe central brillante */
+.magic-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #FFE082, #FFA726, #F57C00);
+  box-shadow: 
+    0 0 30px rgba(255, 167, 38, 0.8),
+    0 0 60px rgba(255, 167, 38, 0.6),
+    0 0 90px rgba(255, 167, 38, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.5);
+  animation: orb-pulse 2s ease-in-out infinite;
+}
+
+@keyframes orb-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 
+      0 0 30px rgba(255, 167, 38, 0.8),
+      0 0 60px rgba(255, 167, 38, 0.6),
+      0 0 90px rgba(255, 167, 38, 0.4);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 
+      0 0 40px rgba(255, 167, 38, 1),
+      0 0 80px rgba(255, 167, 38, 0.8),
+      0 0 120px rgba(255, 167, 38, 0.6);
+  }
+}
+
+/* Anillos mágicos giratorios */
+.magic-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  animation: ring-rotate 3s linear infinite;
+}
+
+.ring-1 {
+  width: 100px;
+  height: 100px;
+  border-top-color: #7CB342;
+  border-right-color: #7CB342;
+  animation-duration: 3s;
+  box-shadow: 0 0 15px rgba(124, 179, 66, 0.5);
+}
+
+.ring-2 {
+  width: 120px;
+  height: 120px;
+  border-bottom-color: #FFA726;
+  border-left-color: #FFA726;
+  animation-duration: 4s;
+  animation-direction: reverse;
+  box-shadow: 0 0 20px rgba(255, 167, 38, 0.4);
+}
+
+.ring-3 {
+  width: 140px;
+  height: 140px;
+  border-top-color: #4FC3F7;
+  border-bottom-color: #4FC3F7;
+  animation-duration: 5s;
+  box-shadow: 0 0 25px rgba(79, 195, 247, 0.4);
+}
+
+@keyframes ring-rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Chispas mágicas */
+.magic-sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: sparkle-float 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.sparkle::before,
+.sparkle::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.sparkle::before {
+  width: 4px;
+  height: 4px;
+  top: 50%;
+  left: -6px;
+  transform: translateY(-50%);
+}
+
+.sparkle::after {
+  width: 4px;
+  height: 4px;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+}
+
+.sparkle-1 {
+  top: 10%;
+  left: 50%;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 30%;
+  right: 10%;
+  animation-delay: 0.3s;
+}
+
+.sparkle-3 {
+  bottom: 30%;
+  right: 20%;
+  animation-delay: 0.6s;
+}
+
+.sparkle-4 {
+  bottom: 10%;
+  left: 50%;
+  animation-delay: 0.9s;
+}
+
+.sparkle-5 {
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 1.2s;
+}
+
+.sparkle-6 {
+  top: 30%;
+  left: 10%;
+  animation-delay: 1.5s;
+}
+
+@keyframes sparkle-float {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(180deg);
+  }
+}
+
+/* Logo contenedor */
+.logo-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+  animation: logo-float 3s ease-in-out infinite;
+}
+
+.magic-logo {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 20px rgba(124, 179, 66, 0.6));
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Texto de carga */
+.loading-text {
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  animation: text-glow 2s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(124, 179, 66, 0.8);
+}
+
+@keyframes text-glow {
+  0%, 100% {
+    opacity: 0.7;
+    text-shadow: 0 0 10px rgba(124, 179, 66, 0.5);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 20px rgba(124, 179, 66, 1), 0 0 30px rgba(124, 179, 66, 0.5);
+  }
+}
+
+/* Partículas de fondo */
+.magic-preloader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(124, 179, 66, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 167, 38, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(79, 195, 247, 0.2) 0%, transparent 50%);
+  animation: bg-shift 10s ease-in-out infinite;
+}
+
+@keyframes bg-shift {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive preloader */
+@media (max-width: 768px) {
+  .magic-orb-container {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .magic-orb {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .ring-1 {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .ring-2 {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .ring-3 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .logo-container {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .loading-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .magic-orb-container {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .magic-orb {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .sparkle {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .logo-container {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Accesibilidad - reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .magic-preloader {
+    transition: none;
+  }
+  
+  .magic-orb,
+  .magic-ring,
+  .sparkle,
+  .logo-container,
+  .loading-text,
+  .magic-preloader::before {
+    animation: none;
+  }
+  
+  .magic-ring {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}

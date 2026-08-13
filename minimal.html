@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alacena Mágica - Recetas deliciosas con los ingredientes que ya tienes en casa">
+  <meta name="theme-color" content="#7CB342">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Alacena Mágica">
+  <meta property="og:description" content="Recetas deliciosas con los ingredientes que ya tienes en casa">
+  <meta property="og:type" content="website">
+  
+  <title>Alacena Mágica - Recetas con lo que tienes</title>
+  
+  <!-- CSS Minimal -->
+  <link rel="stylesheet" href="css/minimal.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/logos/Isotipo.svg">
+</head>
+<body>
+  <!-- Preloader Mágico -->
+  <div id="magic-preloader" class="magic-preloader" aria-hidden="true">
+    <div class="preloader-content">
+      <div class="magic-orb-container">
+        <div class="magic-orb"></div>
+        <div class="magic-sparkles">
+          <span class="sparkle sparkle-1"></span>
+          <span class="sparkle sparkle-2"></span>
+          <span class="sparkle sparkle-3"></span>
+          <span class="sparkle sparkle-4"></span>
+          <span class="sparkle sparkle-5"></span>
+          <span class="sparkle sparkle-6"></span>
+        </div>
+        <div class="magic-ring ring-1"></div>
+        <div class="magic-ring ring-2"></div>
+        <div class="magic-ring ring-3"></div>
+      </div>
+      <div class="logo-container">
+        <img src="assets/logos/Isotipo.svg" alt="Alacena Mágica Logo" class="magic-logo">
+      </div>
+      <p class="loading-text">Preparando magia...</p>
+    </div>
+  </div>
+  
+  <!-- Skip link para accesibilidad -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+  
+  <!-- Header minimal -->
+  <header class="header-minimal">
+    <div class="container">
+      <a href="/" class="logo-minimal">🥗 Alacena Mágica</a>
+      <nav>
+        <a href="#features" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Características</a>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Main content -->
+  <main id="main-content">
+    <!-- Hero section -->
+    <section class="hero-minimal">
+      <div class="container">
+        <h1>Cocina sin límites con lo que ya tienes</h1>
+        <p>Descubre recetas deliciosas usando solo los ingredientes que tienes en tu alacena. Sin compras extras, sin complicaciones.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="index.html" class="btn btn-primary">Ver versión completa</a>
+          <a href="#features" class="btn btn-secondary">Saber más</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Features section -->
+    <section id="features" class="features-minimal">
+      <div class="container">
+        <h2>¿Cómo funciona?</h2>
+        <div class="features-grid">
+          <article class="feature-card">
+            <h3>📝 Ingresa tus ingredientes</h3>
+            <p>Tells us qué tienes disponible en tu cocina y te sugeriremos las mejores recetas.</p>
+          </article>
+          <article class="feature-card">
+            <h3>🍳 Recetas personalizadas</h3>
+            <p>Obtén recetas adaptadas a tus gustos y restricciones alimentarias.</p>
+          </article>
+          <article class="feature-card">
+            <h3>♻️ Reduce el desperdicio</h3>
+            <p>Aprovecha al máximo tus alimentos y cocina de forma más sostenible.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA section -->
+    <section class="cta-minimal">
+      <div class="container">
+        <h2>¿Listo para empezar a cocinar?</h2>
+        <p>Únete a miles de usuarios que ya cocinan de forma inteligente</p>
+        <a href="index.html" class="btn">Explorar ahora</a>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer minimal -->
+  <footer class="footer-minimal">
+    <div class="container">
+      <p>&copy; 2024 Alacena Mágica. Todos los derechos reservados.</p>
+      <div class="footer-links">
+        <a href="privacy.html">Privacidad</a>
+        <a href="terms.html">Términos</a>
+        <a href="support.html">Soporte</a>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Script para el preloader mágico -->
+  <script>
+    (function() {
+      'use strict';
+      
+      // Esperar a que la página esté completamente cargada
+      window.addEventListener('load', function() {
+        const preloader = document.getElementById('magic-preloader');
+        
+        // Pequeño delay para asegurar que se vea la animación
+        setTimeout(function() {
+          preloader.classList.add('hidden');
+          
+          // Remover del DOM después de la transición
+          setTimeout(function() {
+            preloader.setAttribute('aria-hidden', 'true');
+            preloader.style.display = 'none';
+          }, 800);
+        }, 1500);
+      });
+      
+      // Si hay un error de carga, ocultar el preloader después de 5 segundos
+      setTimeout(function() {
+        const preloader = document.getElementById('magic-preloader');
+        if (preloader && !preloader.classList.contains('hidden')) {
+          preloader.classList.add('hidden');
+          setTimeout(function() {
+            preloader.setAttribute('aria-hidden', 'true');
+            preloader.style.display = 'none';
+          }, 800);
+        }
+      }, 5000);
+    })();
+  </script>
+</body>
+</html>
