@@ -594,21 +594,30 @@ body.minimal {
    aclarando el color: la diferencia entre titular y entradilla va por
    tamaño y peso, y todo el texto queda en #1d381c a pelo. */
 .m-cta__card {
-  display: block;
-  padding: clamp(3rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  padding: clamp(2.25rem, 4.5vw, 4rem);
   border-radius: clamp(28px, 4vw, 48px);
   background: var(--terracota);
   box-shadow: var(--m-sombra-lg);
   overflow: hidden;
 }
 
-.m-cta__body {
-  max-width: 720px;
-  margin-inline: auto;
-  text-align: center;
+.m-cta__visual { display: grid; place-items: center; }
+.minimal .m-cta__visual .phone--mini {
+  width: 100%;
+  max-width: 220px;
+  transform: rotate(-6deg);
+  box-shadow: var(--m-sombra-lg);
 }
-
-.m-cta__visual { display: none; }
+/* Igual que en la galería: styles.css fija min-height:210px y a este
+   ancho saldría una caja, no un móvil. */
+.minimal .m-cta__visual .phone--mini .phone__screen {
+  min-height: 0;
+  aspect-ratio: 9 / 16;
+}
 
 .m-cta__title {
   font-family: var(--font-display);
@@ -616,27 +625,24 @@ body.minimal {
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.028em;
-  color: #fff;
+  color: var(--verde-oscuro);
   text-wrap: balance;
 }
 .m-cta__lead {
   margin-top: 1.1rem;
   font-size: clamp(1rem, 0.6vw + 0.88rem, 1.15rem);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--verde-oscuro);
   max-width: 32rem;
 }
 
 .m-form {
-  display: block;
-  margin-top: 2.25rem;
-  width: 100%;
-}
-.m-form__group {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  justify-content: center;
+  margin-top: 2.25rem;
+  width: 100%;
+  max-width: 34rem;
 }
 .m-form__input {
   flex: 1 1 16rem;
@@ -660,33 +666,10 @@ body.minimal {
 }
 .m-form__input.is-invalid { border-color: var(--terracota-texto); }
 
-.m-form__note { margin-top: 1.25rem; font-size: 0.92rem; color: rgba(255, 255, 255, 0.8); }
-.m-form__note.is-success { color: #fff; font-weight: 600; }
+.m-form__note { margin-top: 1.25rem; font-size: 0.92rem; color: var(--texto-suave); }
+.m-form__note.is-success { color: var(--verde-texto); }
 
-/* Botón del CTA - moderno */
-.m-cta .btn--lg {
-  padding: 1.1rem 2.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: var(--r-pill);
-  background: #fff;
-  color: var(--verde-oscuro);
-  box-shadow: none;
-  transition: background var(--m-t-hover) var(--m-ease-salida), color var(--m-t-hover) var(--m-ease-salida);
-  white-space: nowrap;
-}
-.m-cta .btn--lg:hover {
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--verde-texto);
-  transform: none;
-}
-
-.m-stores { 
-  display: flex; 
-  gap: 1rem; 
-  margin-top: 2.5rem; 
-  justify-content: center;
-}
+.m-stores { display: flex; gap: 1rem; margin-top: 2.5rem; }
 .m-stores img { height: 42px; width: auto; }
 
 /* ═══════════════════════════════════
@@ -858,20 +841,21 @@ body.minimal {
 /* ── CTA final ──────────────────────────────────────────────── */
 /* La sección se queda clara y el naranja se concentra en la tarjeta,
    que se define en la sección 6. Aquí solo lo que depende del id. */
-#cta-final .m-form__note { color: rgba(255, 255, 255, 0.8); }
-#cta-final .m-form__input { border-color: transparent; background: #fff; }
+#cta-final .m-form__note { color: var(--verde-oscuro); }
+#cta-final .m-form__input { border-color: transparent; }
 /* El foco tiene que repetirse con el id: la regla de arriba (1,1,0) le
    ganaba a .m-form__input:focus (0,2,0) y el campo del CTA no daba
    NINGUNA señal al enfocarlo con teclado. */
 #cta-final .m-form__input:focus-visible {
-  border-color: #fff;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+  border-color: var(--verde-oscuro);
+  box-shadow: 0 0 0 3px rgba(29, 56, 28, 0.28);
 }
 /* Los estados del campo y del aviso se repiten con el id delante: si no,
    la regla de arriba (1,1,0) los pisa y el error deja de verse. Sobre
-   naranja el borde va en blanco, no en el terracota de texto. */
-#cta-final .m-form__input.is-invalid { border-color: #fff; border-width: 2px; }
-#cta-final .m-form__note.is-success { color: #fff; font-weight: 700; }
+   naranja el borde va en verde oscuro, no en el terracota de texto, que
+   ahí se queda en 2.09:1. */
+#cta-final .m-form__input.is-invalid { border-color: var(--verde-oscuro); border-width: 2px; }
+#cta-final .m-form__note.is-success { color: var(--verde-oscuro); font-weight: 700; }
 
 /* ═══════════════════════════════════
   10. PIEZAS DE v3
@@ -1415,11 +1399,12 @@ body.minimal {
   .minimal .navbar.is-scrolled .navbar__logo { height: 38px; }
 
   /* La tarjeta del CTA se apila: el móvil arriba, el texto debajo. */
-  .m-cta__card { text-align: center; }
+  .m-cta__card { grid-template-columns: 1fr; text-align: center; }
   .m-cta__lead { margin-inline: auto; }
   .m-cta__body .m-form,
   .m-cta__body .m-stores { margin-inline: auto; }
   .m-cta__body .m-stores { justify-content: center; }
+  .minimal .m-cta__visual .phone--mini { max-width: 180px; }
 
   .m-trick__grid { grid-template-columns: 1fr; }
   .m-trick__grid .trick__result { max-width: 30rem; }
@@ -1496,9 +1481,6 @@ body.minimal {
   .m-form { flex-direction: column; }
   .m-form__input { flex: 0 0 auto; width: 100%; }
   .m-form .btn { width: 100%; }
-  
-  /* CTA en mobile: botón a ancho completo */
-  .m-cta .btn--lg { width: 100%; padding: 1rem 1.5rem; }
 
   .m-trust { grid-template-columns: 1fr; gap: 0.75rem; }
   .m-orb { width: 118px; height: 118px; }
