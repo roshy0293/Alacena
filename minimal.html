@@ -50,9 +50,6 @@
 
       <img src="assets/logos/Isotipo.svg" alt="" width="64" height="79" />
     </div>
-
-    <p class="m-preloader__texto">Preparando la magia</p>
-    <span class="m-preloader__barra"><i></i></span>
   </div>
 
   <a class="skip-link" href="#main">Saltar al contenido principal</a>
@@ -583,7 +580,25 @@
     ═══════════════════════════════════════════════ -->
     <section class="m-section m-cta" id="cta-final">
       <div class="container">
+        <!-- Tarjeta naranja contenida, no banda a sangre: el bloque
+             flota sobre el fondo claro con el móvil asomando a un lado. -->
         <div class="m-cta__card reveal">
+          <div class="m-cta__visual" aria-hidden="true">
+            <div class="phone phone--mini">
+              <div class="phone__screen">
+                <div class="mini mini--home">
+                  <div class="mini__bar"></div>
+                  <div class="mini__magic">✨ 12 recetas</div>
+                  <div class="mini__chips"><span></span><span></span><span></span></div>
+                  <div class="mini__card mini__card--sun"></div>
+                  <div class="mini__card mini__card--fresh"></div>
+                  <div class="mini__chips"><span></span><span></span></div>
+                  <div class="mini__card mini__card--warm"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="m-cta__body">
             <h2 class="m-cta__title">¿Listo para crear magia?</h2>
             <p class="m-cta__lead">
@@ -591,19 +606,17 @@
             </p>
 
             <form class="m-form" id="waitlistForm" novalidate>
-              <div class="m-form__group">
-                <label class="sr-only" for="email">Tu correo electrónico</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="m-form__input"
-                  placeholder="tu@correo.com"
-                  required
-                  autocomplete="email"
-                />
-                <button type="submit" class="btn btn--lg m-btn--solid">Quiero probar Alacena Mágica →</button>
-              </div>
+              <label class="sr-only" for="email">Tu correo electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="m-form__input"
+                placeholder="tu@email.com"
+                required
+                autocomplete="email"
+              />
+              <button type="submit" class="btn btn--lg m-btn--solid">Quiero probar Alacena Mágica →</button>
             </form>
 
             <p class="m-form__note" id="formNote" role="status">
