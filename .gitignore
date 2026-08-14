@@ -1,1 +1,1 @@
-(css/minimal.css, js/main.js, minimal.html are source files, no build artifacts, dependencies, or temp files detected)
+(index.html is a source file, so according to rule 6, since there are no build artifacts, dependencies, or temp files in the changes, the .gitignore should remain empty)
