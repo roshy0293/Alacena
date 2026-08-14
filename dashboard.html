@@ -145,6 +145,69 @@
       background: var(--verde-marca);
     }
 
+    .card-badge.magical {
+      background: linear-gradient(135deg, var(--verde-marca), var(--amarillo));
+      animation: sparkle 2s infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.05); }
+    }
+
+    .card.magical {
+      background: linear-gradient(135deg, rgba(69, 155, 91, 0.08) 0%, rgba(234, 204, 52, 0.08) 100%);
+      border: 2px solid var(--verde-marca);
+      box-shadow: 0 0 20px rgba(69, 155, 91, 0.3);
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(69, 155, 91, 0.3); }
+      50% { box-shadow: 0 0 35px rgba(69, 155, 91, 0.5), 0 0 10px rgba(234, 204, 52, 0.3); }
+    }
+
+    .card.magical:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(69, 155, 91, 0.4), 0 0 40px rgba(234, 204, 52, 0.25);
+    }
+
+    .card.magical .card-title {
+      background: linear-gradient(135deg, var(--verde-marca), var(--amarillo));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card.magical .btn-dash {
+      background: linear-gradient(135deg, var(--verde-marca), var(--amarillo));
+      color: var(--noche);
+      font-weight: 700;
+    }
+
+    .card.magical .btn-dash:hover {
+      background: linear-gradient(135deg, var(--amarillo), var(--terracota));
+      color: var(--blanco);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(69, 155, 91, 0.35);
+    }
+
+    .img-magical {
+      background: linear-gradient(135deg, rgba(69, 155, 91, 0.15) 0%, rgba(234, 204, 52, 0.15) 50%, rgba(226, 133, 56, 0.15) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .img-magical::after {
+      content: '🪄';
+      font-size: 4rem;
+      filter: drop-shadow(0 4px 15px rgba(69, 155, 91, 0.4));
+      animation: floatWand 4s ease-in-out infinite;
+    }
+    @keyframes floatWand {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
     .card-image {
       height: 220px;
       background-color: var(--gris-claro);
@@ -327,6 +390,27 @@
             <li>Preloader optimizado</li>
           </ul>
           <a href="minimal.html" class="btn-dash">Ver Versión Minimal →</a>
+        </div>
+      </article>
+
+      <!-- Card 3: Versión Magical -->
+      <article class="card magical">
+        <span class="card-badge magical">Magia y Modernidad</span>
+        <div class="card-image img-magical"></div>
+        <div class="card-content">
+          <h2 class="card-title">Versión Magical</h2>
+          <p class="card-desc">
+            Diseño contemporáneo con efectos visuales avanzados. Gradientes animados, glassmorphism, elementos flotantes 3D y micro-interacciones. Ideal para mostrar la visión premium de la marca.
+          </p>
+          <ul class="card-features">
+            <li>✨ Gradientes animados</li>
+            <li>🪟 Glassmorphism en cards</li>
+            <li>🎭 Mockups 3D con perspectiva</li>
+            <li>🎊 Confeti interactivo</li>
+            <li>📊 Contadores animados</li>
+            <li>🌊 Elementos flotantes</li>
+          </ul>
+          <a href="magical.html" class="btn-dash">Ver Versión Magical →</a>
         </div>
       </article>
 
