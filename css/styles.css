@@ -1349,7 +1349,95 @@ ul, ol { list-style: none; }
   visibility: hidden;
   pointer-events: none;
 }
-.m-preloader img { width: 80px; height: auto; }
+
+.m-preloader__escena {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+}
+
+.m-preloader img {
+  position: relative;
+  z-index: 10;
+  width: 64px;
+  height: 79px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+/* Arcos giratorios */
+.m-preloader__aro {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.m-preloader__aro--1 {
+  width: 100%;
+  height: 100%;
+  border-top-color: rgba(255, 255, 255, 0.9);
+  animation: preloader-giro 1.8s linear infinite;
+}
+
+.m-preloader__aro--2 {
+  width: 75%;
+  height: 75%;
+  border-right-color: rgba(255, 255, 255, 0.6);
+  animation: preloader-giro 2.2s linear infinite reverse;
+}
+
+.m-preloader__aro--3 {
+  width: 50%;
+  height: 50%;
+  border-bottom-color: rgba(255, 255, 255, 0.4);
+  animation: preloader-giro 2.8s linear infinite;
+}
+
+/* Resplandor central */
+.m-preloader__resplandor {
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: preloader-pulso 2s ease-in-out infinite;
+}
+
+/* Órbitas con chispas */
+.m-preloader__orbita {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: preloader-giro 3s linear infinite;
+}
+
+.m-preloader__orbita i {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.m-preloader__orbita--1 { animation-duration: 2.5s; }
+.m-preloader__orbita--2 { animation-duration: 3.2s; animation-direction: reverse; }
+.m-preloader__orbita--3 { animation-duration: 4s; }
+.m-preloader__orbita--4 { animation-duration: 4.8s; animation-direction: reverse; }
+.m-preloader__orbita--5 { animation-duration: 5.5s; }
+
+@keyframes preloader-giro {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes preloader-pulso {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .js .m-preloader {
@@ -1364,6 +1452,7 @@ ul, ol { list-style: none; }
   0%, 72%  { opacity: 1; visibility: visible; }
   100%     { opacity: 0; visibility: hidden; }
 }
+
 @keyframes preloader-logo {
   from { opacity: 0; transform: translateY(10px) scale(0.94); }
   to   { opacity: 1; transform: none; }
