@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Alacena Mágica: transforma los ingredientes que ya tienes en recetas deliciosas. Sin desperdicio, sin complicaciones, pura magia culinaria.">
+<title>Alacena Mágica — Crea magia con lo que tienes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/magical.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="nav" id="nav">
+<div class="nav-inner">
+<a class="nav-logo" href="#"><span class="spark">🥄</span> Alacena Mágica</a>
+<button class="nav-burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+<ul class="nav-links" id="menu">
+<li><a href="#demo">Pruébalo</a></li>
+<li><a href="#funciones">Funciones</a></li>
+<li><a href="#como-funciona">Cómo funciona</a></li>
+<li><a href="#opiniones">Opiniones</a></li>
+<li><a href="#cta" class="nav-cta">Quiero la magia →</a></li>
+</ul>
+</div>
+</header>
+<main id="main">
+<section class="hero">
+<div class="hero-bg" aria-hidden="true"></div>
+<div class="blob blob-1" aria-hidden="true"></div>
+<div class="blob blob-2" aria-hidden="true"></div>
+<div class="blob blob-3" aria-hidden="true"></div>
+<span class="float-item" style="top:16%;left:6%;font-size:3.4rem" aria-hidden="true">🍅</span>
+<span class="float-item" style="top:24%;right:8%;font-size:2.8rem;animation-delay:2s" aria-hidden="true">🥚</span>
+<span class="float-item" style="bottom:20%;left:10%;font-size:2.6rem;animation-delay:4s" aria-hidden="true">🧀</span>
+<span class="float-item" style="bottom:14%;right:14%;font-size:3rem;animation-delay:6s" aria-hidden="true">🥬</span>
+<div class="container hero-grid">
+<div>
+<div class="hero-badge"><span class="spark">✨</span> Tu asistente de cocina inteligente</div>
+<h1 class="hero-title">¿Qué tienes en la nevera?<br><span class="highlight">Veamos qué magia podemos crear.</span></h1>
+<p class="hero-sub">Transforma los ingredientes que ya tienes en recetas deliciosas. Sin desperdicio, sin complicaciones, pura magia culinaria.</p>
+<div class="hero-buttons">
+<a href="#demo" class="btn btn-primary">Pruébalo ahora →</a>
+<a href="#como-funciona" class="btn btn-glass">Ver cómo funciona</a>
+</div>
+<div class="hero-stats">
+<div class="stat-card"><span class="stat-number" data-target="500" data-suffix="+">0</span><span class="stat-label">recetas generadas</span></div>
+<div class="stat-card"><span class="stat-number" data-target="80" data-suffix="%">0</span><span class="stat-label">menos desperdicio</span></div>
+<div class="stat-card"><span class="stat-number" data-target="3" data-suffix="h">0</span><span class="stat-label">ahorradas / semana</span></div>
+</div>
+</div>
+<div class="hero-mockup">
+<div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<div class="m-head"><div><div class="small">Buenos días 👋</div><div class="name">María</div></div><div class="m-avatar">👩</div></div>
+<div class="m-card"><h4>✨ Tienes 8 ingredientes listos</h4><p>Podemos crear 12 recetas mágicas con lo que tienes hoy</p></div>
+<div class="m-title">Tus ingredientes</div>
+<div class="m-chips"><span class="m-chip is-on">🥚 Huevos</span><span class="m-chip is-on">🍅 Tomate</span><span class="m-chip is-on">🧀 Queso</span><span class="m-chip">🧄 Ajo</span><span class="m-chip">🫒 Aceite</span></div>
+<div class="m-title">Receta sugerida</div>
+<div class="m-recipe"><div class="m-recipe-img">🍳</div><div class="m-recipe-info"><h5>Tortilla española express</h5><div class="m-meta"><span>⏱ 20 min</span><span>🔥 Fácil</span><span>✨ 95% match</span></div></div></div>
+<div class="m-nav"><div class="is-active"><span class="ic">🏠</span>Inicio</div><div><span class="ic">🔍</span>Buscar</div><div><span class="ic">📦</span>Despensa</div><div><span class="ic">👤</span>Perfil</div></div>
+</div></div></div>
+</div>
+</div>
+</section>
+<section class="demo" id="demo">
+<div class="container">
+<h2 class="section-title reveal">Pruébalo ahora, sin instalar nada</h2>
+<p class="section-sub reveal">Toca los ingredientes que hay ahora mismo en tu nevera. La receta aparece sola, sin listas de la compra imposibles.</p>
+<div class="demo-box reveal">
+<div>
+<h3 style="font-size:1.4rem">¿Qué tienes hoy?</h3>
+<div class="demo-chips" id="demo-chips" role="group" aria-label="Selecciona ingredientes">
+<button class="chip is-selected" data-ing="huevos" aria-pressed="true">🥚 Huevos</button>
+<button class="chip is-selected" data-ing="tomate" aria-pressed="true">🍅 Tomate</button>
+<button class="chip is-selected" data-ing="queso" aria-pressed="true">🧀 Queso</button>
+<button class="chip" data-ing="ajo" aria-pressed="false">🧄 Ajo</button>
+<button class="chip" data-ing="cebolla" aria-pressed="false">🧅 Cebolla</button>
+<button class="chip" data-ing="espinacas" aria-pressed="false">🥬 Espinacas</button>
+<button class="chip" data-ing="pasta" aria-pressed="false">🍝 Pasta</button>
+<button class="chip" data-ing="aceite" aria-pressed="false">🫒 Aceite</button>
+</div>
+<button class="btn btn-primary" id="btn-magia">✨ Crear magia</button>
+<p class="demo-hint">👆 Toca para añadir o quitar. Prueba a quitar los huevos y mira qué pasa.</p>
+</div>
+<div class="demo-result" id="demo-result" aria-live="polite">
+<div class="demo-placeholder"><span class="big">🪄</span>Elige ingredientes y pulsa<br>«Crear magia»</div>
+</div>
+</div>
+</div>
+</section>
+<section class="problemas" id="problemas">
+<div class="container">
+<h2 class="section-title reveal">¿Te suena familiar?</h2>
+<p class="section-sub reveal">Si alguna vez has vivido esto, Alacena Mágica está hecha para ti.</p>
+<div class="bento">
+<div class="bento-card reveal"><span class="em">🧊</span><h3>Abres la nevera y... nada te inspira</h3><p>Y acabas pidiendo comida otra vez, aunque la nevera esté llena. Tu despensa merece una segunda oportunidad.</p></div>
+<div class="bento-card reveal" data-delay="1"><span class="em">🥬</span><h3>Ingredientes que se echan a perder</h3><p>Cada semana, comida (y dinero) acaba en la basura sin que te des cuenta.</p></div>
+<div class="bento-card reveal"><span class="em">😕</span><h3>Las dietas parecen complicadas</h3><p>Keto, paleo, sin gluten... ¿Y si fuera tan fácil como activar un interruptor?</p></div>
+<div class="bento-card solucion reveal" data-delay="1"><span class="em">🪄</span><h3><strong>Alacena Mágica</strong> convierte ese caos en creatividad. Crea magia con lo que tienes.</h3></div>
+</div>
+</div>
+</section>
+<section class="funciones" id="funciones">
+<div class="container">
+<h2 class="section-title reveal">Tu asistente de cocina que sí te entiende</h2>
+<p class="section-sub reveal">Tres cosas, muy bien hechas. Nada de menús interminables ni funciones que nunca usarás.</p>
+<div class="feature-item">
+<div class="feature-text reveal">
+<h3>Recetas que se adaptan a TI</h3>
+<p>No más «te faltan 5 ingredientes». Alacena Mágica trabaja con lo que realmente tienes en la nevera hoy, no con lo que deberías haber comprado.</p>
+<div class="feature-microcopy">«¿Qué tienes en la nevera? ¡Veamos qué podemos crear!»</div>
+</div>
+<div class="feature-mockup reveal" data-delay="1">
+<div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<div class="m-head"><div class="name" style="font-size:.95rem">← Volver</div></div>
+<h3 style="font-size:1rem">¿Qué tienes hoy?</h3>
+<p style="font-size:.68rem;opacity:.65;margin:4px 0 12px">Selecciona los ingredientes de tu nevera</p>
+<div class="m-search">🔍 Buscar ingrediente...</div>
+<div class="m-title">Verduras y hortalizas</div>
+<div class="m-grid"><div class="m-item is-sel"><span class="em">🍅</span>Tomate</div><div class="m-item is-sel"><span class="em">🧅</span>Cebolla</div><div class="m-item"><span class="em">🥕</span>Zanahoria</div><div class="m-item is-sel"><span class="em">🧄</span>Ajo</div><div class="m-item"><span class="em">🥦</span>Brócoli</div><div class="m-item"><span class="em">🫑</span>Pimiento</div></div>
+<div class="m-title">Proteínas</div>
+<div class="m-grid"><div class="m-item is-sel"><span class="em">🥚</span>Huevos</div><div class="m-item"><span class="em">🍗</span>Pollo</div><div class="m-item"><span class="em">🐟</span>Pescado</div></div>
+<div class="m-btn">✨ Crear magia con 5 ingredientes</div>
+</div></div></div>
+</div>
+</div>
+<div class="feature-item">
+<div class="feature-text reveal">
+<h3>Tu dieta, tus reglas</h3>
+<p>Keto, Paleo, Tradicional o «lo que me apetezca». Filtra recetas que se adapten a tu estilo de vida, no al revés.</p>
+<div class="feature-microcopy">«Modo Keto activado 🥑»</div>
+</div>
+<div class="feature-mockup reveal" data-delay="1">
+<div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<div class="m-head"><div class="name" style="font-size:.95rem">← Volver</div></div>
+<h3 style="font-size:1rem">Recetas mágicas</h3>
+<p style="font-size:.68rem;opacity:.65;margin:4px 0 12px">12 opciones con tus ingredientes</p>
+<div class="m-filters"><span class="m-filter is-active">Todas</span><span class="m-filter">Keto 🥑</span><span class="m-filter">Paleo</span><span class="m-filter">Vegana</span></div>
+<div class="m-row"><div class="m-thumb t1">🍳</div><div><h5>Tortilla española express</h5><div class="meta">⏱ 20 min · Fácil</div></div><span class="m-match">95%</span></div>
+<div class="m-row"><div class="m-thumb t2">🥗</div><div><h5>Ensalada mediterránea</h5><div class="meta">⏱ 10 min · Fácil</div></div><span class="m-match">88%</span></div>
+<div class="m-row"><div class="m-thumb t3">🍝</div><div><h5>Pasta al ajo y tomate</h5><div class="meta">⏱ 15 min · Fácil</div></div><span class="m-match">82%</span></div>
+</div></div></div>
+</div>
+</div>
+<div class="feature-item">
+<div class="feature-text reveal">
+<h3>Menos desperdicio, más ahorro</h3>
+<p>Controla tus ingredientes, recibe avisos amables y descubre recetas para usar lo que está por vencer. Tu bolsillo (y el planeta) te lo agradecerán.</p>
+<div class="feature-microcopy">«¡Hoy has salvado 3 ingredientes!»</div>
+</div>
+<div class="feature-mockup reveal" data-delay="1">
+<div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<div class="m-head"><div class="name" style="font-size:.95rem">← Volver</div></div>
+<h3 style="font-size:1rem">Tu despensa mágica</h3>
+<p style="font-size:.68rem;opacity:.65;margin:4px 0 12px">Control inteligente de tus ingredientes</p>
+<div class="m-stats"><div class="m-stat"><div class="em">💚</div><div class="val">12</div><div class="lbl">Ingredientes salvados</div></div><div class="m-stat"><div class="em">💰</div><div class="val">8,50€</div><div class="lbl">Ahorrado este mes</div></div></div>
+<div class="m-list"><h4>📦 En tu despensa</h4>
+<div class="m-item-row"><span>🍅 Tomates (4)</span><span class="exp ok">5 días</span></div>
+<div class="m-item-row"><span>🧀 Queso fresco</span><span class="exp warn">2 días</span></div>
+<div class="m-item-row"><span>🥚 Huevos (6)</span><span class="exp ok">12 días</span></div>
+<div class="m-item-row"><span>🥛 Leche</span><span class="exp urgent">¡Hoy!</span></div>
+</div>
+</div></div></div>
+</div>
+</div>
+</div>
+</section>
+<section class="pasos" id="como-funciona">
+<div class="container">
+<h2 class="section-title reveal">Crear magia es más fácil de lo que piensas</h2>
+<div class="steps">
+<div class="step reveal"><div class="step-num">1</div><div><h4>Cuéntanos qué tienes</h4><p>Introduce los ingredientes de tu despensa o escanea el ticket de la compra.</p></div></div>
+<div class="step reveal" data-delay="1"><div class="step-num">2</div><div><h4>Elige tu estilo</h4><p>Keto, Paleo, sin gluten, o lo que prefieras. Lo recordamos para la próxima.</p></div></div>
+<div class="step reveal" data-delay="2"><div class="step-num">3</div><div><h4>Descubre recetas</h4><p>Recibe opciones deliciosas que puedes hacer HOY, ordenadas por encaje.</p></div></div>
+<div class="step reveal" data-delay="3"><div class="step-num">4</div><div><h4>Cocina y celebra</h4><p>Disfruta tu creación y mira cuánto has ahorrado. Sin culpa, sin desperdicio.</p></div></div>
+</div>
+</div>
+</section>
+<section class="beneficios" id="opiniones">
+<div class="container">
+<h2 class="section-title reveal">Magia real, resultados reales</h2>
+<div class="big-stats">
+<div class="big-stat reveal"><div class="num" data-target="500" data-suffix="+">0</div><div class="lbl">recetas generadas</div></div>
+<div class="big-stat reveal" data-delay="1"><div class="num" data-target="80" data-suffix="%">0</div><div class="lbl">menos desperdicio</div></div>
+<div class="big-stat reveal" data-delay="2"><div class="num" data-target="3" data-suffix="h">0</div><div class="lbl">ahorradas a la semana</div></div>
+</div>
+<div class="testimonios">
+<div class="testimonio reveal"><div class="stars" aria-label="5 estrellas">★★★★★</div><p>«Pensé que cocinar con lo que tenía era imposible. ¡Alacena Mágica me ha sorprendido!»</p><div class="author">— María, Madrid</div></div>
+<div class="testimonio reveal" data-delay="1"><div class="stars" aria-label="5 estrellas">★★★★★</div><p>«Por fin una app que no me hace sentir culpable por no tener ingredientes gourmet.»</p><div class="author">— Carlos, Barcelona</div></div>
+</div>
+</div>
+</section>
+<section class="galeria" id="galeria">
+<div class="container">
+<h2 class="section-title reveal">Así se ve la magia en acción</h2>
+<p class="section-sub reveal">Un vistazo rápido al flujo completo de la app.</p>
+<div class="gallery-grid">
+<div class="gallery-item reveal"><div class="wrap"><div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<div class="m-head"><div><div class="small">Buenos días 👋</div><div class="name">María</div></div><div class="m-avatar">👩</div></div>
+<div class="m-card"><h4>✨ 8 ingredientes listos</h4><p>12 recetas mágicas disponibles</p></div>
+<div class="m-chips"><span class="m-chip is-on">🍅 Tomate</span><span class="m-chip is-on">🧀 Queso</span><span class="m-chip is-on">🥚 Huevos</span></div>
+<div class="m-recipe"><div class="m-recipe-img">🍳</div><div class="m-recipe-info"><h5>Tortilla española express</h5><div class="m-meta"><span>⏱ 20 min</span><span>✨ 95%</span></div></div></div>
+</div></div></div></div><div class="label">Pantalla de inicio</div></div>
+<div class="gallery-item reveal" data-delay="1"><div class="wrap"><div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<h3 style="font-size:1rem">¿Qué tienes hoy?</h3>
+<div class="m-search">🔍 Buscar...</div>
+<div class="m-grid"><div class="m-item is-sel"><span class="em">🍅</span>Tomate</div><div class="m-item is-sel"><span class="em">🧅</span>Cebolla</div><div class="m-item"><span class="em">🥕</span>Zanahoria</div><div class="m-item is-sel"><span class="em">🧄</span>Ajo</div></div>
+<div class="m-btn">✨ Crear magia</div>
+</div></div></div></div><div class="label">Generador de recetas</div></div>
+<div class="gallery-item reveal" data-delay="2"><div class="wrap"><div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<h3 style="font-size:1rem">Recetas mágicas</h3>
+<div class="m-filters"><span class="m-filter is-active">Todas</span><span class="m-filter">Keto 🥑</span><span class="m-filter">Paleo</span></div>
+<div class="m-row"><div class="m-thumb t1">🍳</div><div><h5>Tortilla española</h5><div class="meta">⏱ 20 min</div></div><span class="m-match">95%</span></div>
+<div class="m-row"><div class="m-thumb t2">🥗</div><div><h5>Ensalada mediterránea</h5><div class="meta">⏱ 10 min</div></div><span class="m-match">88%</span></div>
+</div></div></div></div><div class="label">Lista de recetas</div></div>
+<div class="gallery-item reveal" data-delay="3"><div class="wrap"><div class="phone" aria-hidden="true"><div class="phone-screen"><div class="m-pad">
+<h3 style="font-size:1rem">Tu despensa mágica</h3>
+<div class="m-stats"><div class="m-stat"><div class="em">💚</div><div class="val">12</div><div class="lbl">Salvados</div></div><div class="m-stat"><div class="em">💰</div><div class="val">8,50€</div><div class="lbl">Ahorrado</div></div></div>
+<div class="m-list"><div class="m-item-row"><span>🍅 Tomates</span><span class="exp ok">5 días</span></div><div class="m-item-row"><span>🧀 Queso</span><span class="exp warn">2 días</span></div><div class="m-item-row"><span>🥛 Leche</span><span class="exp urgent">¡Hoy!</span></div></div>
+</div></div></div></div><div class="label">Dashboard de despensa</div></div>
+</div>
+</div>
+</section>
+<section class="cta" id="cta">
+<div class="container">
+<h2 class="reveal">¿Listo para crear magia?</h2>
+<p class="sub reveal">Únete a la revolución de la cocina consciente. Sin complicaciones, sin desperdicio.</p>
+<form class="cta-form reveal" id="cta-form" novalidate>
+<label class="skip" for="email">Tu correo electrónico</label>
+<input type="email" id="email" placeholder="tu@email.com" required>
+<button type="submit" class="btn-magic">✨ Quiero probarla</button>
+</form>
+<p class="micro reveal">Disponible pronto. Sé de los primeros en saber cuándo lanzamos.</p>
+<p class="social-proof reveal">🎉 1.247 personas ya están en la lista</p>
+</div>
+</section>
+</main>
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><h3>🥄 Alacena Mágica</h3><p>Crea magia con lo que tienes.</p></div>
+<div class="footer-links"><h4>Enlaces</h4><ul><li><a href="#demo">Pruébalo</a></li><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#">Contacto</a></li></ul></div>
+<div class="footer-links"><h4>Legal</h4><ul><li><a href="#">Privacidad</a></li><li><a href="#">Términos</a></li><li><a href="#">Date de baja</a></li></ul></div>
+</div>
+<div class="footer-bottom">hola@alacenamagica.com · © 2026 Alacena Mágica. Todos los derechos reservados.</div>
+</div>
+</footer>
+<script src="js/magical.js" defer></script>
+</body>
+</html>
